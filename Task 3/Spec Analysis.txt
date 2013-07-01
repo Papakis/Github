@@ -1,0 +1,8 @@
+We need more people to interview. Can we manage this ?
+
+We want a functionality to create a repository either public or private or the user will go directly through the GitHUB?
+Find this repository either through exact name or by partial match (autocomplete perhaps?)
+Possibility to create collaborators for public Repos or organizations for private 
+Students will be able to give access to professors (This can be achieved by Github )
+
+ 
