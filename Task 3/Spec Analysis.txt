@@ -1,0 +1,12 @@
+We need more people to interview. Can we manage this ?
+
+Do we want a functionality to create a repository either public or private or the user will go directly through the GitHUB?
+Find this repository either through exact name or by partial match (autocomplete perhaps?)
+Possibility to create collaborators for public Repos or organizations for private ((This can be achieved by Github ))
+Students will be able to give access to professors (This can be achieved by Github )
+
+Student Selection by the Accademic personel on the previous selected repository 
+In this selected student statistics could be drawn either aggregated (i.e Number of commits) more detailed (for example number of commits per project) or even more detailed for example commits with their textual description
+
+Academic personel will be able to see the system's statistics such as Contributors, Commits etc and the system will offer him score of students. 
+It will also have the possibility to create gradual marks for these students. 
