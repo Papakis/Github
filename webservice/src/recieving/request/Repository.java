@@ -5,6 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import processing.request.*;
 
 // Plain old Java Object it does not extend as class or implements 
 // an interface
@@ -19,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/repository")
 public class Repository {
 
+  /*
   // This method is called if TEXT_PLAIN is request
   @GET
   @Produces(MediaType.TEXT_PLAIN)
@@ -34,13 +36,14 @@ public class Repository {
   public String sayXMLHello(@PathParam("id") String id) {
     return "<?xml version=\"1.0\"?>" + "<hello> Hello repository| XML" + "</hello>";
   }
-
+*/
   // This method is called if HTML is request
   @GET
   @Produces(MediaType.TEXT_HTML)
   @Path("{id}")
   public String sayHtmlHello(@PathParam("id") String id) {
-	  System.out.println("HTML| I have recived i| " + id);
+	  //System.out.println("HTML| I have recived i| " + id);
+	  DummyProcessing.dummyProcess(id);
     return "<html> " + "<title>" + "Repository" + "</title>"
         + "<body><h1>" + "repository| HTML" + "<h2>" + "repoistory| " + id + "</h2>" + "</body></h1>" + "</html> ";
   }
