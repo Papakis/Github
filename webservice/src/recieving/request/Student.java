@@ -6,6 +6,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import processing.request.DummyProcessing;
+
 // Plain old Java Object it does not extend as class or implements 
 // an interface
 
@@ -18,7 +20,7 @@ import javax.ws.rs.core.MediaType;
 //Sets the path to base URL + /hello
 @Path("/student")
 public class Student {
-
+/*
  // This method is called if TEXT_PLAIN is request
   @GET
   @Produces(MediaType.TEXT_PLAIN)
@@ -34,13 +36,14 @@ public class Student {
   public String sayXMLHello(@PathParam("id") String id) {
     return "<?xml version=\"1.0\"?>" + "<hello> Hello student| " + id + "</hello>";
   }
-
+*/
   // This method is called if HTML is request
   @GET
   @Produces(MediaType.TEXT_HTML)
   @Path("{id}")
   public String sayHtmlHello(@PathParam("id") String id) {
-	  System.out.println("HTML| I have recived i| " + id);
+	  //System.out.println("HTML| I have recived i| " + id);
+	  DummyProcessing.dummyProcess(id);
 	  return "<html> " + "<title>" + "student" + "</title>"
       + "<body><h1>" + "Student| HTML" + "<h2>" + "student| " + id + "</h2>" + "</body></h1>" + "</html> ";
   }
