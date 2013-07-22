@@ -13,7 +13,8 @@ namespace jsonWebService
     /// 1) GetGustomers receiving every customer from DB
     /// 2) GetGustomerById receiving customers according to the supplied ID
     /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
+    //[WebService(Namespace = "http://tempuri.org/")]
+    [WebService]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
      
