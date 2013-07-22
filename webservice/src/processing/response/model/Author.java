@@ -7,9 +7,14 @@ public class Author {
 	private String avatarUrl;
 	private String url;
 	private Week[] weeks;
+	private int total;
 	
 	public String toString(){
-		return "login: "+login+"\n"+"id: "+id+"\n"+"url: "+url+"\n"+"weeks: "+weeks;
+		StringBuffer sb=new StringBuffer();
+		for (int i = 0; i < weeks.length; i++) {
+			sb.append(weeks[i].toString()+"\n");
+		}
+		return "login: "+login+"\n"+"id: "+id+"\n"+"url: "+url+"\n"+"total commits: "+total+"\n"+"weeks: "+sb;
 	}
 	
 	public String getLogin() {
@@ -41,6 +46,14 @@ public class Author {
 	}
 	public void setWeeks(Week[] weeks) {
 		this.weeks = weeks;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
 	}
 
 }
