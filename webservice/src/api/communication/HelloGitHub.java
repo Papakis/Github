@@ -5,6 +5,8 @@ import java.net.URI;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
+import processing.response.deserialize.Deserializer;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
@@ -17,24 +19,31 @@ public class HelloGitHub {
 	    ClientConfig config = new DefaultClientConfig();
 	    Client client = Client.create(config);
 	    WebResource service = client.resource(getBaseURI());
-//	    test1(service);
-//	    test2(service);
-	    pitupitu();
-//	    authentication(service);
-//some change
+	    getRepoStats();
 	  }
 
-	  private static void pitupitu() {
+	  private static void getRepoStats() {
 		  ClientConfig config = new DefaultClientConfig();
 		    Client client = Client.create(config);
 		    WebResource service = client.resource(UriBuilder.fromUri("https://api.github.com").build());
 		    
-		    ClientResponse response = service.path("/users/defunkt?client_id=michalbrz&client_secret=kieken7")
+		    ClientResponse response = service.path("repos/Papakis/Github/stats/contributors")
 		    		.accept(MediaType.APPLICATION_JSON)
 		    		.get(ClientResponse.class);
-//		    ClientResponse response = service.path("/users/defunkt")
-//		    		.accept(MediaType.APPLICATION_JSON)
-//		    		.get(ClientResponse.class);
+//		    System.out.println(response.getHeaders());
+//		    System.out.println(response.getEntity(String.class));
+		    Deserializer deserializer=new Deserializer(response.getEntity(String.class));
+		
+	}
+
+	private static void pitupitu() {
+		  ClientConfig config = new DefaultClientConfig();
+		    Client client = Client.create(config);
+		    WebResource service = client.resource(UriBuilder.fromUri("https://api.github.com").build());
+		    
+		    ClientResponse response = service.path("users/michalbrz/repos")
+		    		.accept(MediaType.APPLICATION_JSON)
+		    		.get(ClientResponse.class);
 		    System.out.println(response.getHeaders());
 		    System.out.println(response.getEntity(String.class));
 		    
@@ -42,34 +51,13 @@ public class HelloGitHub {
 	}
 
 	private static void authentication(WebResource service) {
-		  ClientResponse response=service.path("michalbrz?client_id=michalbrz&client_secret=kieken7").
+		  ClientResponse response=service.path("michalbrz?client_id=michalbrz&client_secret=secret").
 					 accept(MediaType.APPLICATION_JSON).
 					 header("User-Agent", "Awesome-Octocat-App").
 					 get(ClientResponse.class);
 //		  System.out.println(response.getEntity(String.class));
 //		  System.out.println(response.getHeaders());
 //		  System.out.println(response.getStatus());
-	}
-
-	private static void test1(WebResource service) {
-		 ClientResponse response=service.path("octocat").
-				 path("orgs").
-				 accept(MediaType.APPLICATION_JSON).
-				 header("User-Agent", "Awesome-Octocat-App").
-				 get(ClientResponse.class);
-//		  ClientResponse response=service.get(ClientResponse.class);
-		  System.out.println(response.getEntity(String.class));
-		  System.out.println(response.getHeaders());
-		  System.out.println(response.getStatus());
-	}
-
-	private static void test2(WebResource service) {
-		service.setProperty("User-Agent", "Awesome-Octocat-App");
-		System.out.println("test2");
-		System.out.println(service.path("octocat").path("orgs").accept(MediaType.APPLICATION_JSON).get(String.class));
-		
-//		service.path("octocat").path("orgs").accept(MediaType.APPLICATION_JSON).header("User-Agent", "Awesome-Octocat-App");
-//		  System.out.println(service.get(String.class));
 	}
 
 	private static URI getBaseURI() {
