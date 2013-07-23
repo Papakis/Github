@@ -18,13 +18,21 @@ import processing.request.*;
 
 //Sets the path to base URL + /hello
 @Path("/repository")
-public class Repository {
+public class RepositoryReceiver {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
+  @Path("{username}/{reponame}/contributors")
+  public String getContributors(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+  		return ContributorsRequestProcessor.getContributors(userName, repoName);
+  }
+  
+  
+  @GET
+  @Produces(MediaType.TEXT_PLAIN)
   @Path("{username}/{reponame}")
-  public String sayPlainTextHello(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
-    return RepositoryRequestProcessor.getRepositoryInfo(userName, repoName);
+  public String getRepository(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+  		return RepositoryRequestProcessor.getRepositoryInfo(userName, repoName);
   }
 
 //  @GET

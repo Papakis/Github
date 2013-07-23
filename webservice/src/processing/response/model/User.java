@@ -1,20 +1,16 @@
 package processing.response.model;
 
-public class Author {
+public class User {
 	
 	private String login;
 	private int id;
 	private String avatarUrl;
 	private String url;
-	private Week[] weeks;
-	private int total;
+	private String email;
+	private String createdAt;
 	
 	public String toString(){
-		StringBuffer sb=new StringBuffer();
-		for (int i = 0; i < weeks.length; i++) {
-			sb.append(i+1+".  "+weeks[i].toString()+"\n");
-		}
-		return "login: "+login+"\n"+"id: "+id+"\n"+"url: "+url+"\n"+"total commits: "+total+"\n"+"weeks:\n"+sb;
+			return "login: "+login+"\n"+"id: "+id+"\n"+"url: "+url+"\n"+"avatar url: "+avatarUrl+"\n";
 	}
 	
 	public String getLogin() {
@@ -41,19 +37,21 @@ public class Author {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Week[] getWeeks() {
-		return weeks;
-	}
-	public void setWeeks(Week[] weeks) {
-		this.weeks = weeks;
+
+	public String getEmail() {
+		return email;
 	}
 
-	public int getTotal() {
-		return total;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setTotal(int total) {
-		this.total = total;
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 
 }

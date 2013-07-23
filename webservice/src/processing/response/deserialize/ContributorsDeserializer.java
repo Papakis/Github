@@ -3,14 +3,15 @@ package processing.response.deserialize;
 import java.util.ArrayList;
 import java.util.List;
 
-import processing.response.model.Author;
+import processing.response.model.Contributor;
+import processing.response.model.User;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class ContributorsDeserializer {
 	
-	private List<Author> authors=new ArrayList<Author>();
+	private List<Contributor> contributors=new ArrayList<Contributor>();
 	
 	public ContributorsDeserializer(String jsonData){
 		
@@ -18,20 +19,20 @@ public class ContributorsDeserializer {
 		List<ContributorsDeserializerHelper> deserializedList=gson.fromJson(jsonData, new TypeToken<List<ContributorsDeserializerHelper>>(){}.getType());
 		
 		for (ContributorsDeserializerHelper deserializedItem : deserializedList) {
-			authors.add(deserializedItem.toAuthor());
+			contributors.add(deserializedItem.toContributor());
 		}
-		System.out.println(authors.size());
-		for (Author author : authors) {
-			System.out.println(author.toString());
+		System.out.println(contributors.size());
+		for (Contributor contributor : contributors) {
+			System.out.println(contributor.toString());
 		}
 	}
 
-	public List<Author> getAuthors() {
-		return authors;
+	public List<Contributor> getContributors() {
+		return contributors;
 	}
 
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
+	public void setContributors (List<Contributor> contributors) {
+		this.contributors = contributors;
 	}
 	
 //	class ContributorsDeserializer implements JsonDeserializer<Author>{

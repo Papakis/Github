@@ -7,6 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import processing.request.DummyProcessing;
+import processing.request.UserRequestProcessor;
 
 // Plain old Java Object it does not extend as class or implements 
 // an interface
@@ -18,26 +19,16 @@ import processing.request.DummyProcessing;
 // The browser requests per default the HTML MIME type.
 
 //Sets the path to base URL + /hello
-@Path("/student")
-public class Student {
-/*
- // This method is called if TEXT_PLAIN is request
-  @GET
+@Path("/user")
+public class UserReceiver {
+
+	@GET
   @Produces(MediaType.TEXT_PLAIN)
-  @Path("{id}")
-  public String sayPlainTextHello(@PathParam("id") String id) {
-    return "Hello student| " + id;
+  @Path("{username}")
+  public String sayPlainTextHello(@PathParam("username") String userName) {
+    return UserRequestProcessor.getUser(userName);
   }
 
-  // This method is called if XML is request
-  @GET
-  @Produces(MediaType.TEXT_XML)
-  @Path("{id}")
-  public String sayXMLHello(@PathParam("id") String id) {
-    return "<?xml version=\"1.0\"?>" + "<hello> Hello student| " + id + "</hello>";
-  }
-*/
-  // This method is called if HTML is request
   @GET
   @Produces(MediaType.TEXT_HTML)
   @Path("{id}")
