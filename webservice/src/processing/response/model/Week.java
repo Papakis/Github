@@ -11,10 +11,10 @@ public class Week {
 	private int numOfCommits;
 	
 	public String toString(){
-		return "time: "+new Date(time*1000).toString()+"\n"+
-				"numOfAdditions: "+numOfAdditions+"\n"+
-				"numOfDeletions: "+numOfDeletions+"\n"+
-				"numOfCommits: "+numOfCommits;
+		return "time: "+new Date(time*1000).toString()+
+				"\tA:"+numOfAdditions+
+				"\tD: "+numOfDeletions+
+				"\tC: "+numOfCommits;
 	}
 	
 	public void setTime(long time) {

@@ -6,7 +6,7 @@ import java.util.List;
 import processing.response.model.Author;
 import processing.response.model.Week;
 
-public class DeserializedClassHelper {
+public class ContributorsDeserializerHelper {
 	
 	private int total;
 	private WeekHolder[] weeks;
@@ -15,13 +15,6 @@ public class DeserializedClassHelper {
 	public Author toAuthor(){
 		Author genuineAuthor=author.toGenuineAuthor();
 		genuineAuthor.setTotal(total);
-		
-		for (int i = 0; i < weeks.length; i++) {
-			System.out.println(weeks[i].a);
-			System.out.println(weeks[i].c);
-			System.out.println(weeks[i].d);
-			System.out.println(weeks[i].w);
-		}
 		
 		Week[] genuineWeeks=new Week[weeks.length];
 		for (int i = 0; i < genuineWeeks.length; i++) {
