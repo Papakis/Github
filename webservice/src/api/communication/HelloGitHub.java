@@ -5,7 +5,7 @@ import java.net.URI;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
-import processing.response.deserialize.Deserializer;
+import processing.response.deserialize.ContributorsDeserializer;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -30,8 +30,7 @@ public class HelloGitHub {
 		    		.accept(MediaType.APPLICATION_JSON)
 		    		.get(ClientResponse.class);
 //		    System.out.println(response.getHeaders());
-//		    System.out.println(response.getEntity(String.class));
-		    Deserializer deserializer=new Deserializer(response.getEntity(String.class));
+		    ContributorsDeserializer deserializer=new ContributorsDeserializer(response.getEntity(String.class));
 		
 	}
 

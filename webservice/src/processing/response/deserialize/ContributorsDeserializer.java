@@ -1,36 +1,37 @@
 package processing.response.deserialize;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import processing.response.model.Author;
-import processing.response.model.Week;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
-public class Deserializer {
+public class ContributorsDeserializer {
 	
-	public Deserializer(String jsonData){
+	private List<Author> authors=new ArrayList<Author>();
+	
+	public ContributorsDeserializer(String jsonData){
 		
 		Gson gson=new Gson();
-		List<DeserializedClassHelper> deserializedList=gson.fromJson(jsonData, new TypeToken<List<DeserializedClassHelper>>(){}.getType());
-		List<Author> authors=new ArrayList<Author>();
-		for (DeserializedClassHelper deserializedItem : deserializedList) {
+		List<ContributorsDeserializerHelper> deserializedList=gson.fromJson(jsonData, new TypeToken<List<ContributorsDeserializerHelper>>(){}.getType());
+		
+		for (ContributorsDeserializerHelper deserializedItem : deserializedList) {
 			authors.add(deserializedItem.toAuthor());
 		}
 		System.out.println(authors.size());
 		for (Author author : authors) {
 			System.out.println(author.toString());
 		}
+	}
+
+	public List<Author> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
 	}
 	
 //	class ContributorsDeserializer implements JsonDeserializer<Author>{

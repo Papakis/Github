@@ -20,32 +20,30 @@ import processing.request.*;
 @Path("/repository")
 public class Repository {
 
-  /*
-  // This method is called if TEXT_PLAIN is request
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  @Path("{id}")
-  public String sayPlainTextHello(@PathParam("id") String id) {
-    return "Hello repository|" + id + "PLAIN";
+  @Path("{username}/{reponame}")
+  public String sayPlainTextHello(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+    return RepositoryRequestProcessor.getRepositoryInfo(userName, repoName);
   }
 
-  // This method is called if XML is request
-  @GET
-  @Produces(MediaType.TEXT_XML)
-  @Path("{id}")
-  public String sayXMLHello(@PathParam("id") String id) {
-    return "<?xml version=\"1.0\"?>" + "<hello> Hello repository| XML" + "</hello>";
-  }
-*/
-  // This method is called if HTML is request
+//  @GET
+//  @Produces(MediaType.APPLICATION_JSON)
+//  @Path("{id}")
+//  public String returnJson(@PathParam("id") String id) {
+//    return "<?xml version=\"1.0\"?>" + "<hello> Hello repository| XML" + "</hello>";
+//  }
+
   @GET
   @Produces(MediaType.TEXT_HTML)
-  @Path("{id}")
-  public String sayHtmlHello(@PathParam("id") String id) {
-	  //System.out.println("HTML| I have recived i| " + id);
-	  DummyProcessing.dummyProcess(id);
-    return "<html> " + "<title>" + "Repository" + "</title>"
-        + "<body><h1>" + "repository| HTML" + "<h2>" + "repoistory| " + id + "</h2>" + "</body></h1>" + "</html> ";
+  @Path("{username}/{reponame}")
+  public String sayHtmlHello(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+	  return "<html> " + "<title>" + "Repository " +repoName+ "</title>"+ "<body><h3>"+
+			  RepositoryRequestProcessor.getRepositoryInfo(userName, repoName)
+			 + "</h3>" + "</body>" + "</html> ";
+//	  DummyProcessing.dummyProcess(id);
+//    return "<html> " + "<title>" + "Repository" + "</title>"
+//        + "<body><h1>" + "repository| HTML" + "<h2>" + "repoistory| " + id + "</h2>" + "</body></h1>" + "</html> ";
   }
 
 } 

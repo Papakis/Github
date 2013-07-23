@@ -12,9 +12,9 @@ public class Author {
 	public String toString(){
 		StringBuffer sb=new StringBuffer();
 		for (int i = 0; i < weeks.length; i++) {
-			sb.append(weeks[i].toString()+"\n");
+			sb.append(i+1+".  "+weeks[i].toString()+"\n");
 		}
-		return "login: "+login+"\n"+"id: "+id+"\n"+"url: "+url+"\n"+"total commits: "+total+"\n"+"weeks: "+sb;
+		return "login: "+login+"\n"+"id: "+id+"\n"+"url: "+url+"\n"+"total commits: "+total+"\n"+"weeks:\n"+sb;
 	}
 	
 	public String getLogin() {
