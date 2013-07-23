@@ -3,25 +3,26 @@ package processing.response.deserialize;
 import java.util.ArrayList;
 import java.util.List;
 
-import processing.response.model.Author;
+import processing.response.model.Contributor;
+import processing.response.model.User;
 import processing.response.model.Week;
 
 public class ContributorsDeserializerHelper {
 	
 	private int total;
 	private WeekHolder[] weeks;
-	AuthorHolder author;
+	ContributorHolder author;
 	
-	public Author toAuthor(){
-		Author genuineAuthor=author.toGenuineAuthor();
-		genuineAuthor.setTotal(total);
+	public Contributor toContributor(){
+		Contributor genuineContributor=author.toGenuineContributor();
+		genuineContributor.setTotal(total);
 		
 		Week[] genuineWeeks=new Week[weeks.length];
 		for (int i = 0; i < genuineWeeks.length; i++) {
 			genuineWeeks[i]=weeks[i].toGenuineWeek();
 		}
-		genuineAuthor.setWeeks(genuineWeeks);
-		return genuineAuthor;
+		genuineContributor.setWeeks(genuineWeeks);
+		return genuineContributor;
 	}
 	
 	public int getTotal() {
@@ -56,19 +57,19 @@ public class ContributorsDeserializerHelper {
 		}
 	}
 	
-	class AuthorHolder{
+	class ContributorHolder{
 		String login;
 		int id;
 		String avatar_url;
 		String url;
 		
-		Author toGenuineAuthor(){
-			Author genuineAuthor=new Author();
-			genuineAuthor.setAvatarUrl(avatar_url);
-			genuineAuthor.setId(id);
-			genuineAuthor.setLogin(login);
-			genuineAuthor.setUrl(url);
-			return genuineAuthor;
+		Contributor toGenuineContributor(){
+			Contributor genuineContributor=new Contributor();
+			genuineContributor.getUser().setAvatarUrl(avatar_url);
+			genuineContributor.getUser().setId(id);
+			genuineContributor.getUser().setLogin(login);
+			genuineContributor.getUser().setUrl(url);
+			return genuineContributor;
 		}
 	}
 
