@@ -29,14 +29,14 @@ public class UserReceiver {
     return UserRequestProcessor.getUser(userName);
   }
 
-  @GET
-  @Produces(MediaType.TEXT_HTML)
-  @Path("{id}")
-  public String sayHtmlHello(@PathParam("id") String id) {
-	  //System.out.println("HTML| I have recived i| " + id);
-	  DummyProcessing.dummyProcess(id);
-	  return "<html> " + "<title>" + "student" + "</title>"
-      + "<body><h1>" + "Student| HTML" + "<h2>" + "student| " + id + "</h2>" + "</body></h1>" + "</html> ";
-  }
+//  @GET
+//  @Produces(MediaType.TEXT_HTML)
+//  @Path("{id}")
+//  public String sayHtmlHello(@PathParam("id") String id) {
+//	  //System.out.println("HTML| I have recived i| " + id);
+//	  DummyProcessing.dummyProcess(id);
+//	  return "<html> " + "<title>" + "student" + "</title>"
+//      + "<body><h1>" + "Student| HTML" + "<h2>" + "student| " + id + "</h2>" + "</body></h1>" + "</html> ";
+//  }
 
 } 
