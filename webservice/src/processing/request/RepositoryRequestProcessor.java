@@ -14,7 +14,7 @@ public class RepositoryRequestProcessor {
 	
 	public static String getRepositoryInfo(String userName, String repoName){
 		String request=URL.API+URL.REPOS+userName+"/"+repoName;
-		String serverResponse=RequestSender.sendRequest(request);
+		String serverResponse=RequestSender.sendRequest(request).getEntity(String.class);
 		
 		Gson gson=new Gson();
 		

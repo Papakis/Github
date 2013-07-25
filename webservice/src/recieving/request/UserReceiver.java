@@ -1,5 +1,7 @@
 package recieving.request;
 
+import java.rmi.AccessException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,7 +28,12 @@ public class UserReceiver {
   @Produces(MediaType.TEXT_PLAIN)
   @Path("{username}")
   public String sayPlainTextHello(@PathParam("username") String userName) {
-    return UserRequestProcessor.getUser(userName);
+    try {
+		return UserRequestProcessor.getUser(userName);
+	} catch (RuntimeException e) {
+		throw e;
+//		return "EXCEPTION!!!11111111    "+e.getStackTrace();
+	}
   }
 
 //  @GET
