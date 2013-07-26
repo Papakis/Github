@@ -6,6 +6,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import loggin.JavaLogger;
+import processing.request.DummyProcessing;
 import processing.request.UserRequestProcessor;
 
 @Path("/user")
@@ -16,21 +18,24 @@ public class UserReceiver {
   @Path("{username}")
   public String sayPlainTextHello(@PathParam("username") String userName) {
     try {
+    	JavaLogger.log("UserReceiver| Name| " + userName);
 		return UserRequestProcessor.getUser(userName);
 	} catch (RuntimeException e) {
-		throw e;
-//		return "EXCEPTION!!!11111111    "+e.getStackTrace();
+    	JavaLogger.log("UserReceiver| Exception| " + e.getStackTrace());
+		//throw e;
+		return "EXCEPTION!!!   "+ e.getStackTrace();
 	}
   }
 
-//  @GET
-//  @Produces(MediaType.TEXT_HTML)
-//  @Path("{id}")
-//  public String sayHtmlHello(@PathParam("id") String id) {
-//	  //System.out.println("HTML| I have recived i| " + id);
-//	  DummyProcessing.dummyProcess(id);
-//	  return "<html> " + "<title>" + "student" + "</title>"
-//      + "<body><h1>" + "Student| HTML" + "<h2>" + "student| " + id + "</h2>" + "</body></h1>" + "</html> ";
-//  }
+
+  /*@GET
+  @Produces(MediaType.TEXT_HTML)
+  @Path("{id}")
+  public String sayHtmlHello(@PathParam("id") String id) {
+	  //System.out.println("HTML| I have recived i| " + id);
+	  DummyProcessing.dummyProcess(id);
+	  return "<html> " + "<title>" + "student" + "</title>"
+      + "<body><h1>" + "Student| HTML" + "<h2>" + "student| " + id + "</h2>" + "</body></h1>" + "</html> ";
+  }*/
 
 } 
