@@ -11,7 +11,11 @@ public class ContributorsRequestProcessor {
 	
 	public static String getContributors(String userName, String repoName){
 		String request=URL.API+URL.REPOS+userName+"/"+repoName+URL.CONTRIBUTORS;
+<<<<<<< HEAD
 		String serverResponse=RequestSender.sendRequest(request);
+=======
+		String serverResponse=RequestSender.sendRequest(request).getEntity(String.class);
+>>>>>>> upstream/master
 		ContributorsDeserializer deserializer=new ContributorsDeserializer(serverResponse);
 		List<Contributor> contributors=deserializer.getContributors();
 		StringBuffer sb=new StringBuffer();
