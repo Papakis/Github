@@ -17,12 +17,7 @@ public class UserRequestProcessor {
 		String serverResponse=RequestSender.sendRequest(request).getEntity(String.class);
 		Gson gson=new Gson();
 		UserDeserializerHelper deserializedUser=gson.fromJson(serverResponse, UserDeserializerHelper.class);
-		System.out.println("CHECKPOINT");
 		User user=deserializedUser.toGenuineUser();
-		System.out.println("genuine?");
-//		ContributorsDeserializer deserializer=new ContributorsDeserializer(serverResponse);
-//		List<Author> authors=deserializer.getAuthors();
-//		StringBuffer sb=new StringBuffer();
 		return user.toString();
 	}
 
