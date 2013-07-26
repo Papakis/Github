@@ -5,7 +5,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-<<<<<<< HEAD
+
+import loggin.JavaLogger;
 import processing.request.*;
 
 // Plain old Java Object it does not extend as class or implements 
@@ -18,12 +19,6 @@ import processing.request.*;
 // The browser requests per default the HTML MIME type.
 
 //Sets the path to base URL + /hello
-=======
-
-import processing.request.ContributorsRequestProcessor;
-import processing.request.RepositoryRequestProcessor;
-
->>>>>>> upstream/master
 @Path("/repository")
 public class RepositoryReceiver {
 
@@ -31,6 +26,7 @@ public class RepositoryReceiver {
   @Produces(MediaType.TEXT_PLAIN)
   @Path("{username}/{reponame}/contributors")
   public String getContributors(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+	  	JavaLogger.log("RepositoryReceiver| getContributors| User| " + userName + "Repo| " + repoName);
   		return ContributorsRequestProcessor.getContributors(userName, repoName);
   }
   
@@ -39,6 +35,7 @@ public class RepositoryReceiver {
   @Produces(MediaType.TEXT_PLAIN)
   @Path("{username}/{reponame}")
   public String getRepository(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+	  	JavaLogger.log("RepositoryReceiver| getRepository| User| " + userName + "Repo| " + repoName);
   		return RepositoryRequestProcessor.getRepositoryInfo(userName, repoName);
   }
 
@@ -53,6 +50,7 @@ public class RepositoryReceiver {
   @Produces(MediaType.TEXT_HTML)
   @Path("{username}/{reponame}")
   public String sayHtmlHello(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+	  JavaLogger.log("RepositoryReceiver| sayHtmlHello| User| " + userName + "Repo| " + repoName);
 	  return "<html> " + "<title>" + "Repository " +repoName+ "</title>"+ "<body><h3>"+
 			  RepositoryRequestProcessor.getRepositoryInfo(userName, repoName)
 			 + "</h3>" + "</body>" + "</html> ";

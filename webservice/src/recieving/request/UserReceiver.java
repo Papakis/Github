@@ -6,6 +6,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import loggin.JavaLogger;
 import processing.request.DummyProcessing;
 import processing.request.UserRequestProcessor;
 
@@ -26,10 +27,18 @@ public class UserReceiver {
   @Produces(MediaType.TEXT_PLAIN)
   @Path("{username}")
   public String sayPlainTextHello(@PathParam("username") String userName) {
-    return UserRequestProcessor.getUser(userName);
+    try {
+    	JavaLogger.log("UserReceiver| Name| " + userName);
+		return UserRequestProcessor.getUser(userName);
+	} catch (RuntimeException e) {
+    	JavaLogger.log("UserReceiver| Exception| " + e.getStackTrace());
+		//throw e;
+		return "EXCEPTION!!!   "+ e.getStackTrace();
+	}
   }
 
-  @GET
+
+  /*@GET
   @Produces(MediaType.TEXT_HTML)
   @Path("{id}")
   public String sayHtmlHello(@PathParam("id") String id) {
@@ -37,6 +46,6 @@ public class UserReceiver {
 	  DummyProcessing.dummyProcess(id);
 	  return "<html> " + "<title>" + "student" + "</title>"
       + "<body><h1>" + "Student| HTML" + "<h2>" + "student| " + id + "</h2>" + "</body></h1>" + "</html> ";
-  }
+  }*/
 
 } 

@@ -6,4 +6,8 @@ public class DummyProcessing
 		System.out.println("DUMMY| RECIEVED| " + input);
 	}
 	
+	public static String getUser(String user){return null;}
+	
+	public static String getRepos(String user, String repo){return null;}
+	
 }
