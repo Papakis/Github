@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import com.sun.jersey.api.client.ClientResponse;
 
 @Aspect
-public class StatusCodeHandler {
+public class StatusCodeHandlerOld {
 	
 	@Around("call (ClientResponse api.communication.*.sendRequest(java.lang.String))"
 			+ "&& args(inputUrl)")
