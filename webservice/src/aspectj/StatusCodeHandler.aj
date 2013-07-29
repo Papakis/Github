@@ -3,6 +3,8 @@ package aspects;
 import java.net.URI;
 import java.util.List;
 
+import loggin.JavaLogger;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,9 +17,9 @@ public class StatusCodeHandler {
 	@Around("call (ClientResponse api.communication.*.sendRequest(java.lang.String))"
 			+ "&& args(inputUrl)")
 	public ClientResponse doSomethign(ProceedingJoinPoint joinPoint, String inputUrl) throws Throwable{
-		
+		JavaLogger.log("StatusCodeHandler| logAround| Before_Proceeding");
 		ClientResponse serverResponse=(ClientResponse) joinPoint.proceed();
-//		System.out.println(serverResponse.getEntity(String.class));
+		JavaLogger.log("StatusCodeHandler| logAround| After_Proceeding| Status|" + serverResponse.getStatus());
 		switch (serverResponse.getStatus()) {
 		case 202:
 			Thread.sleep(1000);
