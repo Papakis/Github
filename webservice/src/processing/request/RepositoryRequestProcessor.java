@@ -11,6 +11,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import processing.response.deserialize.ContributorsDeserializer;
 import processing.response.deserialize.ContributorsDeserializerHelper;
 import processing.response.deserialize.RepositoryDeseralizerHelper;
+import processing.response.model.Commit;
 import processing.response.model.Repository;
 import processing.response.model.User;
 import api.communication.RequestSender;
@@ -37,8 +38,13 @@ public class RepositoryRequestProcessor {
 		
 		Gson gson=new Gson();
 		List<int[]> deserializedList=gson.fromJson(serverResponse.getEntity(String.class), new TypeToken<List<int[]>>(){}.getType());
-		
-		return deserializedList.toString();
+		int[][] days=new int[7][24];
+		for (int[] is : deserializedList) {
+				days[is[0]][is[1]]=is[2];
+		}
+		Commit comm=new Commit();
+		comm.setCommitDistribution(days);
+		return comm.printCommitDistribution();
 	}
 	
 	public static String getCommitInfo(String userName, String repoName){
@@ -48,8 +54,7 @@ public class RepositoryRequestProcessor {
 		
 		Gson gson=new Gson();
 		
-		CommitDeseralizerHelper deserializer=gson.fromJson(serverResponse.getEntity(String.class), CommitDeseralizerHelper.class);
-		Commit comm = deserializer.toGenuineCommit();
+		Commit comm=gson.fromJson(serverResponse.getEntity(String.class), Commit.class);
 		return comm.toString();
 	}
 

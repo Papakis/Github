@@ -49,7 +49,7 @@ public class RepositoryReceiver {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  @Path("{username}/{reponame}")
+  @Path("{username}/{reponame}/commit_activity")
   public String getCommitActivity(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
 	  	JavaLogger.log("RepositoryReceiver| getCommitActivity| User| " + userName + "Repo| " + repoName);
   		return RepositoryRequestProcessor.getCommitInfo(userName, repoName);
