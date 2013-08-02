@@ -1,22 +1,41 @@
 package processing.response.deserialize;
 
+import java.util.Date;
+
 import processing.response.model.Repository;
 import processing.response.model.User;
 
 public class RepositoryDeseralizerHelper {
 	
 	private int id;
+	private UserDeserializerHelper owner;
 	private String name;
 	private String full_name;
-	private UserDeserializerHelper owner;
-	private boolean Private;
-	private String html_url;
 	private String description;
+	private boolean Private;
+	private boolean fork;
 	private String url;
-	private String created_at;
-	private String pushed_at;
-	private int size;
+	private String html_url;
+	private String mirror_url;
+	private String homepage;
 	private String language;
+	private int forks;
+	private int forks_count;
+	private int watchers;
+	private int watchers_count;
+	private int size;
+	private String master_branch;
+	private int open_issues;
+	private int open_issues_count;
+	private String pushed_at;
+	private String created_at;
+	private String updated_at;
+	private UserDeserializerHelper organization; 
+	private RepositoryDeseralizerHelper parent; 
+	private RepositoryDeseralizerHelper source; 
+	private boolean has_issues;
+	private boolean has_wiki;
+	private boolean has_downloads;
 	
 	public Repository toGenuineRepository(){
 		Repository repo=new Repository();
