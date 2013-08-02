@@ -19,7 +19,7 @@ import processing.request.*;
 // The browser requests per default the HTML MIME type.
 
 //Sets the path to base URL + /hello
-@Path("/repository")
+@Path("/repos")
 public class RepositoryReceiver {
 
   @GET

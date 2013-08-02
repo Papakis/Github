@@ -19,7 +19,7 @@ public class RequestSender {
 		JavaLogger.log("RequestSender| sendRequest| Url| " + request);
 		ClientConfig config = new DefaultClientConfig();
 	    Client client = Client.create(config);
-	    client.addFilter(new HTTPBasicAuthFilter(":", ":"));
+	    client.addFilter(new HTTPBasicAuthFilter("abd-shouman", "real4ever"));
 	    WebResource service = client.resource(UriBuilder.fromUri(request).build());
 	    
 	    ClientResponse response = service.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);

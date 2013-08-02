@@ -22,19 +22,23 @@ public class StatusCodeHandler {
 		JavaLogger.log("StatusCodeHandler| logAround| After_Proceeding| Status|" + serverResponse.getStatus());
 		switch (serverResponse.getStatus()) {
 		case 202:
+			JavaLogger.log("StatusCodeHandler| switch| 202");
 			Thread.sleep(1000);
 			ClientResponse repeatedServerResponse=(ClientResponse) joinPoint.proceed();
 			serverResponse=repeatedServerResponse;
 			break;
 		case 302:
 		case 307:
+			JavaLogger.log("StatusCodeHandler| switch| 302/307");
 			String newUrl=serverResponse.getHeaders().getFirst("Location");
 			ClientResponse newServerResponse=(ClientResponse) joinPoint.proceed(new Object[]{newUrl});
 			serverResponse=newServerResponse;
 			throw new RuntimeException(String.valueOf(serverResponse.getStatus()));
 		case 404:
+			JavaLogger.log("StatusCodeHandler| switch| 404");
 			throw new RuntimeException("404");
 		case 403:
+			JavaLogger.log("StatusCodeHandler| switch| 403");
 			throw new RuntimeException("403");
 		}
 		

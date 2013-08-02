@@ -24,6 +24,7 @@ public class UserRequestProcessor {
 		Gson gson=new Gson();
 		
 		UserDeserializerHelper deserializedUser = gson.fromJson(serverResponse.getEntity(String.class), UserDeserializerHelper.class);
+		JavaLogger.log("UserRequestProcessor| getUser| Plain_DesralizedUser| " + deserializedUser.toString());
 		User user = deserializedUser.toGenuineUser();
 		
 
