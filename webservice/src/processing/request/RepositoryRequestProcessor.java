@@ -40,5 +40,17 @@ public class RepositoryRequestProcessor {
 		
 		return deserializedList.toString();
 	}
+	
+	public static String getCommitInfo(String userName, String repoName){
+		String request=URL.API+URL.REPOS+userName+"/"+repoName;
+		JavaLogger.log("RepositoryRequestProcessor| getCommitInfo| User| " + userName + " Repo| " + repoName + " Url| " + request);
+		ClientResponse serverResponse=RequestSender.sendRequest(request);
+		
+		Gson gson=new Gson();
+		
+		CommitDeseralizerHelper deserializer=gson.fromJson(serverResponse.getEntity(String.class), CommitDeseralizerHelper.class);
+		Commit comm = deserializer.toGenuineCommit();
+		return comm.toString();
+	}
 
 }

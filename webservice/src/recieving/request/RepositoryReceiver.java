@@ -46,6 +46,15 @@ public class RepositoryReceiver {
 	  JavaLogger.log("RepositoryReceiver| getRepositoryCommitsDistribution| User| " + userName + "Repo| " + repoName);
 	  return RepositoryRequestProcessor.getRepositoryCommitsDistribution(userName, repoName);
   }
+
+  @GET
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("{username}/{reponame}")
+  public String getCommitActivity(@PathParam("username") String userName, @PathParam("reponame") String repoName) {
+	  	JavaLogger.log("RepositoryReceiver| getCommitActivity| User| " + userName + "Repo| " + repoName);
+  		return RepositoryRequestProcessor.getCommitInfo(userName, repoName);
+  }
+
 //  @GET
 //  @Produces(MediaType.APPLICATION_JSON)
 //  @Path("{id}")
