@@ -4,6 +4,8 @@ import java.util.List;
 
 import loggin.JavaLogger;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.ClientResponse;
 
 import processing.response.deserialize.ContributorsDeserializer;
@@ -21,12 +23,10 @@ public class ContributorsRequestProcessor {
 		
 		ContributorsDeserializer deserializer=new ContributorsDeserializer(serverResponse.getEntity(String.class));
 		List<Contributor> contributors=deserializer.getContributors();
-		StringBuffer sb=new StringBuffer();
 		
-		for (Contributor contributor : contributors) {
-			sb.append(contributor.toString());
-		}
-		return sb.toString();
+		Gson gson=new Gson();
+		return gson.toJson(contributors, new TypeToken<List<Contributor>>(){}.getType());
+		
 	}
 
 }

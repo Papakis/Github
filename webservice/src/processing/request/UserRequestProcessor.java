@@ -27,8 +27,9 @@ public class UserRequestProcessor {
 		JavaLogger.log("UserRequestProcessor| getUser| Plain_DesralizedUser| " + deserializedUser.toString());
 		User user = deserializedUser.toGenuineUser();
 		
+		return gson.toJson(user);
 
-		return user.toString();
+//		return user.toString();
 	}
 
 }

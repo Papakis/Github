@@ -27,7 +27,10 @@ public class RepositoryRequestProcessor {
 		
 		RepositoryDeseralizerHelper deserializer=gson.fromJson(serverResponse.getEntity(String.class), RepositoryDeseralizerHelper.class);
 		Repository repo=deserializer.toGenuineRepository();
-		return repo.toString();
+//		return repo.toString();
+		
+		String json=gson.toJson(repo);
+		return json;
 	}
 
 	public static String getRepositoryCommitsDistribution(String userName,
@@ -44,7 +47,10 @@ public class RepositoryRequestProcessor {
 		}
 		Commit comm=new Commit();
 		comm.setCommitDistribution(days);
-		return comm.printCommitDistribution();
+		
+		return gson.toJson(comm.getCommitDistribution());
+		
+//		return comm.printCommitDistribution();
 	}
 	
 	public static String getCommitInfo(String userName, String repoName){
@@ -53,9 +59,11 @@ public class RepositoryRequestProcessor {
 		ClientResponse serverResponse=RequestSender.sendRequest(request);
 		
 		Gson gson=new Gson();
-		
 		Commit comm=gson.fromJson(serverResponse.getEntity(String.class), Commit.class);
-		return comm.toString();
+		
+		return gson.toJson(comm);
+		
+//		return comm.toString();
 	}
 
 }
