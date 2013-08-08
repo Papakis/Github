@@ -12,6 +12,7 @@ import processing.response.deserialize.ContributorsDeserializer;
 import processing.response.model.Contributor;
 import processing.response.model.User;
 import api.communication.RequestSender;
+import aspects.StatusCodeHandler;
 
 public class ContributorsRequestProcessor {
 	
@@ -21,12 +22,17 @@ public class ContributorsRequestProcessor {
 		
 		ClientResponse serverResponse = RequestSender.sendRequest(request);
 		
+		if(serverResponse != null){
 		ContributorsDeserializer deserializer=new ContributorsDeserializer(serverResponse.getEntity(String.class));
 		List<Contributor> contributors=deserializer.getContributors();
 		
 		Gson gson=new Gson();
 		return gson.toJson(contributors, new TypeToken<List<Contributor>>(){}.getType());
-		
+		}
+		else{
+			System.out.println("ContributorsRequestProcessor|getContributors|Error|");
+			return StatusCodeHandler.jsonErrorGenerator();
+		}
 	}
 
 }

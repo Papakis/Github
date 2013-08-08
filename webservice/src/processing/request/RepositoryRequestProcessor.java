@@ -15,6 +15,7 @@ import processing.response.model.Commit;
 import processing.response.model.Repository;
 import processing.response.model.User;
 import api.communication.RequestSender;
+import aspects.StatusCodeHandler;
 
 public class RepositoryRequestProcessor {
 	
@@ -22,6 +23,8 @@ public class RepositoryRequestProcessor {
 		String request=URL.API+URL.REPOS+userName+"/"+repoName;
 		JavaLogger.log("RepositoryRequestProcessor| getRepositoryInfo| User| " + userName + " Repo| " + repoName + " Url| " + request);
 		ClientResponse serverResponse=RequestSender.sendRequest(request);
+		
+		if(serverResponse != null){
 		
 		Gson gson=new Gson();
 		
@@ -31,13 +34,19 @@ public class RepositoryRequestProcessor {
 		
 		String json=gson.toJson(repo);
 		return json;
+		}
+		else{
+			System.out.println("RepositoryRequestProcessor|getRepositoryInfo|Error|");
+			return StatusCodeHandler.jsonErrorGenerator();
+		}
 	}
 
-	public static String getRepositoryCommitsDistribution(String userName,
-			String repoName) {
+	public static String getRepositoryCommitsDistribution(String userName,String repoName) {
 		String request=URL.API+URL.REPOS+userName+"/"+repoName+URL.COMMITS_DISTRIBUTION;
 		JavaLogger.log("RepositoryRequestProcessor| getRepositoryCommitsDistribution| User| " + userName + " Repo| " + repoName + " Url| " + request);
 		ClientResponse serverResponse=RequestSender.sendRequest(request);
+		
+		if(serverResponse != null){
 		
 		Gson gson=new Gson();
 		List<int[]> deserializedList=gson.fromJson(serverResponse.getEntity(String.class), new TypeToken<List<int[]>>(){}.getType());
@@ -49,6 +58,11 @@ public class RepositoryRequestProcessor {
 		comm.setCommitDistribution(days);
 		
 		return gson.toJson(comm.getCommitDistribution());
+		}
+		else{
+			System.out.println("RepositoryRequestProcessor|getRepositoryCommitsDistribution|Error|");
+			return StatusCodeHandler.jsonErrorGenerator();
+		}
 		
 //		return comm.printCommitDistribution();
 	}
@@ -58,10 +72,17 @@ public class RepositoryRequestProcessor {
 		JavaLogger.log("RepositoryRequestProcessor| getCommitInfo| User| " + userName + " Repo| " + repoName + " Url| " + request);
 		ClientResponse serverResponse=RequestSender.sendRequest(request);
 		
+		if(serverResponse != null){
+			
 		Gson gson=new Gson();
 		Commit comm=gson.fromJson(serverResponse.getEntity(String.class), Commit.class);
 		
 		return gson.toJson(comm);
+		}
+		else{
+			System.out.println("RepositoryRequestProcessor|getCommitInfo|Error|");
+			return StatusCodeHandler.jsonErrorGenerator();
+		}
 		
 //		return comm.toString();
 	}

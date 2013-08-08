@@ -11,6 +11,7 @@ import processing.response.deserialize.ContributorsDeserializer;
 import processing.response.deserialize.UserDeserializerHelper;
 import processing.response.model.User;
 import api.communication.RequestSender;
+import aspects.StatusCodeHandler;
 
 public class UserRequestProcessor {
 
@@ -19,6 +20,8 @@ public class UserRequestProcessor {
 		String request=URL.API+URL.USERS+userName;
 		JavaLogger.log("UserRequestProcessor| getUser| User| " + userName + " URL| " + request);
 		ClientResponse serverResponse= RequestSender.sendRequest(request);
+		
+		if(serverResponse != null){
 		//System.out.println(serverResponse);
 		JavaLogger.log("UserRequestProcessor| getUser| ServerResponse| " + serverResponse);
 		Gson gson=new Gson();
@@ -27,8 +30,13 @@ public class UserRequestProcessor {
 		JavaLogger.log("UserRequestProcessor| getUser| Plain_DesralizedUser| " + deserializedUser.toString());
 		User user = deserializedUser.toGenuineUser();
 		
-		return gson.toJson(user);
-
+			return gson.toJson(user);
+		}
+		else
+		{
+			System.out.println("UserRequestProcessor|getUser|Error|");
+			return StatusCodeHandler.jsonErrorGenerator();
+		}
 //		return user.toString();
 	}
 
