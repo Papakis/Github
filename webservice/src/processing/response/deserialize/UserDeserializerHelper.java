@@ -127,6 +127,10 @@ public class UserDeserializerHelper {
 		user.setId(id);
 		user.setLogin(login);
 		user.setUrl(url);
+		user.setFollowers(followers);
+		user.setFollowing(following);
+		user.setHtmlUrl(html_url);
+		user.setPublicRepos(public_repos);
 		return user;
 	}
 	

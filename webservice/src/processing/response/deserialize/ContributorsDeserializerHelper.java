@@ -11,10 +11,12 @@ public class ContributorsDeserializerHelper {
 	
 	private int total;
 	private WeekHolder[] weeks;
-	ContributorHolder author;
+	UserDeserializerHelper author;
 	
 	public Contributor toContributor(){
-		Contributor genuineContributor=author.toGenuineContributor();
+//		Contributor genuineContributor=author.toGenuineContributor();
+		Contributor genuineContributor=new Contributor();
+		genuineContributor.setUser(author.toGenuineUser());
 		genuineContributor.setTotal(total);
 		
 		Week[] genuineWeeks=new Week[weeks.length];
@@ -57,20 +59,4 @@ public class ContributorsDeserializerHelper {
 		}
 	}
 	
-	class ContributorHolder{
-		String login;
-		int id;
-		String avatar_url;
-		String url;
-		
-		Contributor toGenuineContributor(){
-			Contributor genuineContributor=new Contributor();
-			genuineContributor.getUser().setAvatarUrl(avatar_url);
-			genuineContributor.getUser().setId(id);
-			genuineContributor.getUser().setLogin(login);
-			genuineContributor.getUser().setUrl(url);
-			return genuineContributor;
-		}
-	}
-
 }

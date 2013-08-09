@@ -6,8 +6,14 @@ public class User {
 	private int id;
 	private String avatarUrl;
 	private String url;
+	private String htmlUrl;
 	private String email;
 	private String createdAt;
+	private String reposUrl;
+	private String publicRepos;
+	private String followers;
+	private String following;
+	
 	
 	public String toString(){
 			return "login: "+login+"\n"+"id: "+id+"\n"+"url: "+url+"\n"+"avatar url: "+avatarUrl+"\n";
@@ -52,6 +58,46 @@ public class User {
 
 	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getReposUrl() {
+		return reposUrl;
+	}
+
+	public void setReposUrl(String reposUrl) {
+		this.reposUrl = reposUrl;
+	}
+
+	public String getHtmlUrl() {
+		return htmlUrl;
+	}
+
+	public void setHtmlUrl(String htmlUrl) {
+		this.htmlUrl = htmlUrl;
+	}
+
+	public String getPublicRepos() {
+		return publicRepos;
+	}
+
+	public void setPublicRepos(String publicRepos) {
+		this.publicRepos = publicRepos;
+	}
+
+	public String getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(String followers) {
+		this.followers = followers;
+	}
+
+	public String getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(String following) {
+		this.following = following;
 	}
 
 }
