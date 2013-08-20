@@ -15,15 +15,20 @@
 <textarea class="input" id="text" placeholder="Place holder for CSV" rows="20" cols="100"></textarea>
 
 <br/>
-<input id = "btnSubmit" type="button" id ="btnCSV" value="Get CSV" onclick="CallGithub()"/>
-
+<input id = "btnSubmit" type="button" id ="btnCSV" value="Get CSV" onclick="callGithub()"/>
+<input id = "btnReset" type="button" id ="btnReset" value="Reset" onclick="reset()"/>
 <script type="text/javascript">
     // JSON to CSV Converter
-    function CallGithub (){
+    function reset()
+    {
+        $('#text').text("");
+        $('#jsonResponse').text("");
+    }
+    function callGithub (){
         $.getJSON("https://api.github.com/orgs/github/repos?callback=?",
                 function(json)
                 {
-                    //console.log(json.meta);
+
                     if(json.meta.status==200)
                     {
                         //alert("response taken, json.meta.status = " + json.meta.status);
