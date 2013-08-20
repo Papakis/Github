@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Demo - Covnert JSON to CSV</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="https://github.com/douglascrockford/JSON-js/raw/master/json2.js"></script>
+
+
+</head>
+<body>
+<h1>JSON</h1>
+<p id="jsonResponse"></p>
+<pre id="json"></pre>
+<h1>CSV</h1>
+<textarea class="input" id="text" placeholder="Place holder for CSV" rows="20" cols="100"></textarea>
+
+<br/>
+<input id = "btnSubmit" type="button" id ="btnCSV" value="Get CSV" onclick="CallGithub()"/>
+
+<script type="text/javascript">
+    // JSON to CSV Converter
+    function CallGithub (){
+        $.getJSON("https://api.github.com/orgs/github/repos?callback=?",
+                function(json)
+                {
+                    //console.log(json.meta);
+                    if(json.meta.status==200)
+                    {
+                        //alert("response taken, json.meta.status = " + json.meta.status);
+                        $('#jsonResponse').text("response taken, json.meta.status = " + json.meta.status);
+                        //$("#txtaResults").html(json.data.repos_url);
+                        var csv = ConvertToCSV(json.data)
+                        $('#text').text(csv);
+                    }
+                    else
+                    {
+                        $('#jsonResponse').text("Error happened");
+                        //console.log(json);
+                    }
+                })
+    }
+    function ConvertToCSV(objArray) {
+        //var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+        var array;
+
+        if (typeof objArray == 'object')
+        {
+            array = objArray
+        }
+        else
+        {
+            array = JSON.parse(objArray)
+        }
+        var str = '';
+
+        for (var i = 0; i < array.length; i++)
+        {
+            var line = '';
+
+            for (var index in array[i])
+
+            {
+                if ( typeof array[i][index] != 'object')
+                {
+                    if (line != '')
+                        line += ',';
+
+                    line += array[i][index];
+                }
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+
+    }
+
+
+</script>
+<script type="application/ecmascript" async="" src="https://raw.github.com/eligrey/Blob.js/master/Blob.min.js"/>
+<script type="application/ecmascript" async="" src="https://raw.github.com/eligrey/FileSaver.js/master/FileSaver.js"/>
+</body>
+</html>
