@@ -13,7 +13,7 @@ public class Welcome {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public static String welcome() {
-		//System.out.println("HELLO");
+//		System.out.println("HELLO");
 		JavaLogger.log("Welcome| welcome|");
 		return "<html> " + "<title>" + "Welcome" + "</title>"
 	      + "<body><h1>" + "Hi, welcome to our Project" + "</body></h1>" + "</html> ";

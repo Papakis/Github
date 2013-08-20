@@ -15,14 +15,16 @@ import aspects.StatusCodeHandler;
 
 public class UserRequestProcessor {
 
-	public static String getUser(String userName){
+	public static String getUser(String userName, String token){
 		//System.out.println("Request Processor| GET USER| " + userName);
 		String request=URL.API+URL.USERS+userName;
+		
+		request=AuthorizationProcessor.addAuthorization(request, token);
+		
 		JavaLogger.log("UserRequestProcessor| getUser| User| " + userName + " URL| " + request);
 		ClientResponse serverResponse= RequestSender.sendRequest(request);
 		
 		if(serverResponse != null){
-		//System.out.println(serverResponse);
 		JavaLogger.log("UserRequestProcessor| getUser| ServerResponse| " + serverResponse);
 		Gson gson=new Gson();
 		

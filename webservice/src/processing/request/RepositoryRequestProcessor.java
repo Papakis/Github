@@ -19,9 +19,12 @@ import aspects.StatusCodeHandler;
 
 public class RepositoryRequestProcessor {
 	
-	public static String getRepositoryInfo(String userName, String repoName){
-		String request=URL.API+URL.REPOS+userName+"/"+repoName;
+	public static String getRepositoryInfo(String userName, String repoName, String token){
+		String request=URL.API+URL.REPOS+userName+"/"+repoName+URL.PER_PAGE;
 		JavaLogger.log("RepositoryRequestProcessor| getRepositoryInfo| User| " + userName + " Repo| " + repoName + " Url| " + request);
+		
+		AuthorizationProcessor.addAuthorization(request, token);
+		
 		ClientResponse serverResponse=RequestSender.sendRequest(request);
 		
 		if(serverResponse != null){
@@ -41,9 +44,11 @@ public class RepositoryRequestProcessor {
 		}
 	}
 
-	public static String getRepositoryCommitsDistribution(String userName,String repoName) {
+	public static String getRepositoryCommitsDistribution(String userName,String repoName, String token) {
 		String request=URL.API+URL.REPOS+userName+"/"+repoName+URL.COMMITS_DISTRIBUTION;
 		JavaLogger.log("RepositoryRequestProcessor| getRepositoryCommitsDistribution| User| " + userName + " Repo| " + repoName + " Url| " + request);
+		
+		AuthorizationProcessor.addAuthorization(request, token);
 		ClientResponse serverResponse=RequestSender.sendRequest(request);
 		
 		if(serverResponse != null){
@@ -67,9 +72,11 @@ public class RepositoryRequestProcessor {
 //		return comm.printCommitDistribution();
 	}
 	
-	public static String getCommitInfo(String userName, String repoName){
+	public static String getCommitInfo(String userName, String repoName, String token){
 		String request=URL.API+URL.REPOS+userName+"/"+repoName;
 		JavaLogger.log("RepositoryRequestProcessor| getCommitInfo| User| " + userName + " Repo| " + repoName + " Url| " + request);
+		
+		request=AuthorizationProcessor.addAuthorization(request, token);
 		ClientResponse serverResponse=RequestSender.sendRequest(request);
 		
 		if(serverResponse != null){

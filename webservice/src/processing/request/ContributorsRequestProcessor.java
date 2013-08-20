@@ -16,9 +16,11 @@ import aspects.StatusCodeHandler;
 
 public class ContributorsRequestProcessor {
 	
-	public static String getContributors(String userName, String repoName){
-		String request=URL.API+URL.REPOS+userName+"/"+repoName+URL.CONTRIBUTORS;
+	public static String getContributors(String userName, String repoName, String token){
+		String request=URL.API+URL.REPOS+userName+"/"+repoName+URL.CONTRIBUTORS+URL.PER_PAGE;
 		JavaLogger.log("ContributorsRequestProcessor| getContributors| User| " + userName + " Repo| " + repoName);
+		
+		request=AuthorizationProcessor.addAuthorization(request, token);
 		
 		ClientResponse serverResponse = RequestSender.sendRequest(request);
 		
