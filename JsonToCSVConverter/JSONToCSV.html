@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Demo - Covnert JSON to CSV</title>
+
+</head>
+<body>
+<h1>JSON</h1>
+<p id="jsonResponse"></p>
+<pre id="json"></pre>
+<h1>CSV</h1>
+<textarea class="input" id="text" placeholder="Place holder for CSV" rows="20" cols="100"></textarea>
+
+<br/>
+
+<input id = "btnSubmit" type="button" id ="btnCSV" value="Get CSV" onclick="callGithub(url)"/>
+<input id = "btnReset" type="button" id ="btnReset" value="Reset" onclick="reset()"/>
+<input id = "btnSave" type="button" id ="btnSave" value="Save" onclick="save($('#text').val())"/>
+
+<script>
+
+    var url="https://api.github.com/orgs/github/repos";
+
+</script>
+<script type="text/javascript" src="scripts/helper.js"></script>
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/fileSaver.js"></script>
+<script type="text/javascript" src="scripts/blobBuilder.js"></script>
+<script type="text/javascript" src="scripts/blob.js"></script>
+</body>
+</html>
