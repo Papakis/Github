@@ -6,6 +6,7 @@ import loggin.JavaLogger;
 import processing.response.deserialize.UserDeserializerHelper;
 import processing.response.model.Authorization;
 import processing.response.model.User;
+import security.TokenSecurity;
 import api.communication.RequestSender;
 import aspects.StatusCodeHandler;
 
@@ -32,8 +33,10 @@ public class AuthorizationProcessor {
 			JavaLogger.log("AuthorizationProcessor| authorizeUser| ServerResponse| " + serverResponse);
 			Gson gson=new Gson();
 			Authorization authorization=gson.fromJson(serverResponse.getEntity(String.class), Authorization.class);
+			System.out.println(authorization.getToken());
+			System.out.println("encrypted: "+TokenSecurity.encrypt(authorization.getToken()));
 		
-			return gson.toJson(authorization.getToken());
+			return gson.toJson(TokenSecurity.encrypt(authorization.getToken()));
 		}
 		else
 		{
@@ -47,8 +50,8 @@ public class AuthorizationProcessor {
 			return request;
 		}
 		else{
-			if(request.contains("?")) request=request.concat("&access_token="+token);
-			else request=request.concat("?access_token="+token);
+			if(request.contains("?")) request=request.concat("&access_token="+TokenSecurity.decrypt(token));
+			else request=request.concat("?access_token="+TokenSecurity.decrypt(token));
 			return request;
 		}
 	}

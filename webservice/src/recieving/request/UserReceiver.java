@@ -30,8 +30,7 @@ public class UserReceiver {
     	String entity=UserRequestProcessor.getUser(userName, token);
 		return wrapResponse(entity);
 	} catch (RuntimeException e) {
-    	JavaLogger.log("UserReceiver| Exception| " + e.getStackTrace());
-		//throw e;
+    	JavaLogger.log("UserReceiver| Exception| " + e.getMessage());
 		return wrapResponse("EXCEPTION!!!   "+ e.getStackTrace());
 	}
   }
@@ -50,7 +49,7 @@ public class UserReceiver {
 			String entity=AuthorizationProcessor.authorizeUser(userName, password);
 			return wrapResponse(entity);
 		} catch (RuntimeException e) {
-			JavaLogger.log("UserReceiver| authorizeUser | Exception| " + e.getStackTrace());
+			JavaLogger.log("UserReceiver| authorizeUser | Exception| " + e.getMessage());
 			return wrapResponse("EXCEPTION!!!   "+ e.getStackTrace());
 		}
 	}

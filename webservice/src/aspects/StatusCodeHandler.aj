@@ -80,7 +80,7 @@ public class StatusCodeHandler {
 	}
 	
 	public static String jsonErrorGenerator(){
-//		System.out.println("json generator| " + statusCode);
+		System.out.println("json generator| " + statusCode);
 		String gson = "{";
 		gson += "\"error\": " + "\"" + statusCode + "\",";
 		gson += "\"message\": " + "\"" + statusErrorMessages(statusCode) + "\"";
