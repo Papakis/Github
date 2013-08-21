@@ -72,9 +72,31 @@ function save(csv)
     var bb = new BlobBuilder();
     bb.append(csv);
     var blob = bb.getBlob("text/plain");
-    var fileName = "Statistics";
-    saveAs(blob, "Statistics.txt");
+    var fileName = "Stats_" + GetDateTime() + ".txt";
+    saveAs(blob, fileName);
 }
 
+function GetDateTime()
+{
+    var myDate = new Date();
+    var MonthHolder = myDate.getMonth()+ 1;
+    var dateHolder = addZero(myDate.getFullYear().toString()) + addZero(MonthHolder) + addZero(myDate.getDate().toString());
+    var timeHolder = addZero(myDate.getHours().toString())+ addZero(myDate.getMinutes().toString()) + addZero(myDate.getSeconds().toString())
+    return dateHolder + timeHolder
+}
+function addZero(dateElement)
+{
+    var tempHolder;
+    tempHolder = dateElement;
+    if(tempHolder<10)
+    {
+        tempHolder = '0' + tempHolder;
+        return tempHolder;
+    }
+    else
+    {
+        return tempHolder;
+    }
+}
 
 
