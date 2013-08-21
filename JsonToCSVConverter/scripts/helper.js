@@ -72,7 +72,7 @@ function save(csv)
     var bb = new BlobBuilder();
     bb.append(csv);
     var blob = bb.getBlob("text/plain");
-    var fileName = "Stats_" + GetDateTime() + ".txt";
+    var fileName = "Stats_" + GetDateTime() + ".csv";
     saveAs(blob, fileName);
 }
 
