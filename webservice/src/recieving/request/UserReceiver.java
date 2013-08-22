@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import database.DAO;
+import database.DatabaseHelper;
 import loggin.JavaLogger;
 import processing.request.AuthorizationProcessor;
 import processing.request.DummyProcessing;
@@ -41,17 +43,33 @@ public class UserReceiver {
 	public Response authorizeUser(@FormParam("username") String userName, @FormParam("password") String password) {
 		try {
 			JavaLogger.log("UserReceiver| authorizeUser |  Name| " + userName);
-			
-//			String userName22="abd-shouman";
-//			String password22="real4ever";
-//			String entity=AuthorizationProcessor.authorizeUser(userName22, password22);
-			
-			String entity=AuthorizationProcessor.authorizeUser(userName, password);
+//			DatabaseHelper.startDatabase();
+			boolean createCookie=false;
+			String entity=AuthorizationProcessor.authorizeUser(userName, password, createCookie);
 			return wrapResponse(entity);
 		} catch (RuntimeException e) {
 			JavaLogger.log("UserReceiver| authorizeUser | Exception| " + e.getMessage());
+			e.printStackTrace();
 			return wrapResponse("EXCEPTION!!!   "+ e.getStackTrace());
 		}
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("db")
+	public Response databaseTest() {  // TESTING PURPOSE ONLY
+		DatabaseHelper.startDatabase();
+//		DatabaseHelper.insertStuff();
+//		DatabaseHelper.getStuff();
+		String username="michalbrz";
+		String password = "pwd";
+		String token = "token123123";
+		String cookie = "cookie233";
+		DAO.insertUser(username, password, token);
+		DAO.insertUserWithCookie(username, password, token,cookie);
+		System.out.println(DAO.getUserCookie(username));
+		System.out.println(DAO.getUserToken(username, password));
+		return wrapResponse("DF");
 	}
 
 } 

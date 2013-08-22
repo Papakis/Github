@@ -6,10 +6,9 @@ public class PasswordSecurity {
 	
 
 	static BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-//	String encryptedPassword = passwordEncryptor.encryptPassword(userPassword);
 	
-	static{
-		
+	public static String encryptPassword(String password){
+		return passwordEncryptor.encryptPassword(password);
 	}
 	
 	public static boolean isPasswordLegit(String inputPassword, String encryptedPassword){
