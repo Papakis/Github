@@ -24,17 +24,15 @@ public class ContributorsRequestProcessor {
 		
 		ClientResponse serverResponse = RequestSender.sendRequest(request);
 		
-		if(serverResponse != null){
+		if(serverResponse == null){
+			System.out.println("ContributorsRequestProcessor|getContributors|Error|");
+			return StatusCodeHandler.jsonErrorGenerator();
+		}
 		ContributorsDeserializer deserializer=new ContributorsDeserializer(serverResponse.getEntity(String.class));
 		List<Contributor> contributors=deserializer.getContributors();
 		
 		Gson gson=new Gson();
 		return gson.toJson(contributors, new TypeToken<List<Contributor>>(){}.getType());
-		}
-		else{
-			System.out.println("ContributorsRequestProcessor|getContributors|Error|");
-			return StatusCodeHandler.jsonErrorGenerator();
-		}
 	}
 
 }

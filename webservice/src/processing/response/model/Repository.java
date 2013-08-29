@@ -14,6 +14,7 @@ public class Repository {
 	private String pushedAt;
 	private int size;
 	private String language;
+	private String commitsUrl;
 	
 	public String toString(){
 		return "id: "+id+"\nname: "+name+"\nfull name: "+fullName+"\nOWNER\n"+owner
@@ -104,6 +105,14 @@ public class Repository {
 	}
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public String getCommitsUrl() {
+		return commitsUrl;
+	}
+
+	public void setCommitsUrl(String commitsUrl) {
+		this.commitsUrl = commitsUrl;
 	}
 	
 

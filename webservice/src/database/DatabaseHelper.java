@@ -16,11 +16,6 @@ public class DatabaseHelper {
 	private static String USER = "sa";
 	private static String PWD = "";
 
-	private static String USERNAME = "username";
-	private static String PASSWORD = "password";
-	private static String TOKEN = "token";
-	private static String COOKIE = "cookie";
-
 	static DataSource ds = JdbcConnectionPool.create(URL, USER, PWD);
 	static Connection conn;
 
@@ -36,7 +31,6 @@ public class DatabaseHelper {
 							+ " )");
 			Server server = Server.createTcpServer().start(); // so we can display database in h2 console
 			System.out.println("URL: jdbc:h2:" + server.getURL() + "/mem:test");
-//			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -61,9 +55,6 @@ public class DatabaseHelper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		} finally {
-//		    if(statement != null) statement.close();
-//		}
 		
 		return result;
 	}
@@ -98,17 +89,12 @@ public class DatabaseHelper {
 	public static void getStuff() {
 		try {
 			Connection conn = ds.getConnection();
-			// int
-			// test=conn.createStatement().executeQuery(("SELECT COUNT(*) FROM DATA"));
 			ResultSet rs = conn.createStatement().executeQuery(
 					("SELECT username FROM users"));
 			while (rs.next()) {
 				System.out.println("value: " + rs.getString("username"));
 			}
-			// Statement statement=conn.createStatement();
-			// ResultSet rs=statement.executeQuery(sql)
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

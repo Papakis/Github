@@ -9,12 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import database.DAO;
-import database.DatabaseHelper;
 import loggin.JavaLogger;
 import processing.request.AuthorizationProcessor;
-import processing.request.DummyProcessing;
 import processing.request.UserRequestProcessor;
+import database.DAO;
+import database.DatabaseHelper;
 
 @Path("/user")
 public class UserReceiver {
@@ -26,15 +25,30 @@ public class UserReceiver {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{username}")
-  public Response getJsonUser(@PathParam("username") String userName, @FormParam("token") String token) {
-    try {
-    	JavaLogger.log("UserReceiver| Name| " + userName);
-    	String entity=UserRequestProcessor.getUser(userName, token);
-		return wrapResponse(entity);
-	} catch (RuntimeException e) {
-    	JavaLogger.log("UserReceiver| Exception| " + e.getMessage());
-		return wrapResponse("EXCEPTION!!!   "+ e.getStackTrace());
-	}
+	public Response getJsonUser(@PathParam("username") String userName, @FormParam("token") String token) {
+	    try {
+	    	JavaLogger.log("UserReceiver| Name| " + userName);
+	    	String entity=UserRequestProcessor.getUser(userName, token);
+			return wrapResponse(entity);
+		} catch (RuntimeException e) {
+	    	JavaLogger.log("UserReceiver| Exception| " + e.getMessage());
+			return wrapResponse("EXCEPTION!!!   "+ e.getStackTrace());
+		}
+  }
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("{username}/commits")
+	public Response getJsonUserCommits(@PathParam("username") String userName, @FormParam("token") String token,
+			@FormParam("repoName") String repoName, @FormParam("owner") String owner) {
+	    try {
+	    	JavaLogger.log("UserReceiver| Name| " + userName);
+	    	String entity=UserRequestProcessor.getUserCommits(userName, repoName, owner, token);
+			return wrapResponse(entity);
+		} catch (RuntimeException e) {
+	    	JavaLogger.log("UserReceiver| Exception| " + e.getMessage());
+			return wrapResponse("EXCEPTION!!!   "+ e.getStackTrace());
+		}
   }
 	
 	@POST
@@ -43,9 +57,7 @@ public class UserReceiver {
 	public Response authorizeUser(@FormParam("username") String userName, @FormParam("password") String password) {
 		try {
 			JavaLogger.log("UserReceiver| authorizeUser |  Name| " + userName);
-//			DatabaseHelper.startDatabase();
-			boolean createCookie=false;
-			String entity=AuthorizationProcessor.authorizeUser(userName, password, createCookie);
+			String entity=AuthorizationProcessor.authorizeUser(userName, password);
 			return wrapResponse(entity);
 		} catch (RuntimeException e) {
 			JavaLogger.log("UserReceiver| authorizeUser | Exception| " + e.getMessage());
@@ -64,9 +76,7 @@ public class UserReceiver {
 		String username="michalbrz";
 		String password = "pwd";
 		String token = "token123123";
-		String cookie = "cookie233";
 		DAO.insertUser(username, password, token);
-		DAO.insertUserWithCookie(username, password, token,cookie);
 		System.out.println(DAO.getUserCookie(username));
 		System.out.println(DAO.getUserToken(username, password));
 		return wrapResponse("DF");

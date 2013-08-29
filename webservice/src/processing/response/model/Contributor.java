@@ -1,10 +1,14 @@
 package processing.response.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Contributor {
 	
 	private User user;
 	private Week[] weeks;
 	private int total;
+	private List<String> commitMessages=new ArrayList<String>();
 	
 	public Contributor(){
 		user=new User();
@@ -35,6 +39,14 @@ public class Contributor {
 	}
 	public void setTotal(int total) {
 		this.total = total;
+	}
+
+	public List<String> getCommitMessages() {
+		return commitMessages;
+	}
+
+	public void setCommitMessages(List<String> commitMessages) {
+		this.commitMessages = commitMessages;
 	}
 
 }

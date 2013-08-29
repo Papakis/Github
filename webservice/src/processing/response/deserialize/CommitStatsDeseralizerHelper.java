@@ -2,16 +2,16 @@ package processing.response.deserialize;
 
 import java.util.Arrays;
 
-import processing.response.model.Commit;
+import processing.response.model.CommitStats;
 import processing.response.model.Repository;
 
-public class CommitDeseralizerHelper {
+public class CommitStatsDeseralizerHelper {
 	private String[] days = new String[7];
 	private String total;
 	private String week;
 	
-	public Commit toGenuineCommit(){
-		Commit commit = new Commit();
+	public CommitStats toGenuineCommit(){
+		CommitStats commit = new CommitStats();
 		commit.setDays(days);
 		commit.setTotal(Integer.parseInt(total));
 		commit.setWeek(Integer.parseInt(week));

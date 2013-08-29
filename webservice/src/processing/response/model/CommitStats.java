@@ -3,7 +3,7 @@ package processing.response.model;
 import java.sql.Date;
 import java.util.Arrays;
 
-public class Commit {
+public class CommitStats {
 	private String[] days = new String[7]; // 0-6 weekdays, starting from Sunday
 	private int total;
 	private long week;

@@ -23,11 +23,6 @@ public class DAO {
 			return null;
 		}
 		
-//		
-//		String query2 = "SELECT token FROM users " 
-//					+ "WHERE " + USERNAME + "='" + username
-//					+ "' AND " + PASSWORD + "='"+ PasswordSecurity.encryptPassword(password)+"'";
-//		return DatabaseHelper.getSingleElement(query2, TOKEN);
 	}
 	
 	public static String getUserCookie(String username) {
@@ -54,9 +49,8 @@ public class DAO {
 	}
 
 	public static void insertCookie(String username, String cookie) {
-		String query = "INSERT INTO users (" + COOKIE + ") " 
-				+ "VALUES ('" + PasswordSecurity.encryptPassword(cookie) + "') "
-				+ "WHERE " + USERNAME + "='"	+ username + "'";
+		String query = "UPDATE users SET " + COOKIE + "='"+PasswordSecurity.encryptPassword(cookie) 
+				+ "' WHERE " + USERNAME + "='"	+ username + "'";
 		DatabaseHelper.insert(query);
 	}
 

@@ -12,6 +12,7 @@ public class RepositoryDeseralizerHelper {
 	private String name;
 	private String full_name;
 	private String description;
+	private String commits_url;
 	private boolean Private;
 	private boolean fork;
 	private String url;
@@ -51,6 +52,7 @@ public class RepositoryDeseralizerHelper {
 		repo.setPushedAt(pushed_at);
 		repo.setSize(size);
 		repo.setUrl(url);
+		repo.setCommitsUrl(commits_url);
 		return repo;
 	}
 	
@@ -126,6 +128,16 @@ public class RepositoryDeseralizerHelper {
 	}
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+
+	public String getCommits_url() {
+		return commits_url;
+	}
+
+
+	public void setCommits_url(String commits_url) {
+		this.commits_url = commits_url;
 	}
 
 }

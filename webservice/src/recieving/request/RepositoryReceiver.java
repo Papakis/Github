@@ -45,21 +45,21 @@ public class RepositoryReceiver {
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("{username}/{reponame}/commits_distribution")
+  @Path("{username}/{reponame}/commits_distribution") //number of commits per hour in each day
   public Response getJsonRepositoryCommitsDistribution(@PathParam("username") String userName,
 		  @PathParam("reponame") String repoName,  @FormParam("token") String token) {
 	  JavaLogger.log("RepositoryReceiver| getJsonRepositoryCommitsDistribution| User| " + userName + "Repo| " + repoName);
-	  String entity= RepositoryRequestProcessor.getRepositoryCommitsDistribution(userName, repoName, token);
+	  String entity= RepositoryRequestProcessor.getHourlyCommitsDistribution(userName, repoName, token);
 	  return wrapResponse(entity);
   }
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("{username}/{reponame}/commit_activity")
-  public Response getJsonCommitActivity(@PathParam("username") String userName, 
+  @Path("{username}/{reponame}/commit_activity")  //number of commits per day in each week
+  public Response getJsonWeeklyCommitActivity(@PathParam("username") String userName, 
 		  @PathParam("reponame") String repoName,  @FormParam("token") String token) {
 	  	JavaLogger.log("RepositoryReceiver| getJsonCommitActivity| User| " + userName + "Repo| " + repoName);
-  		String entity=  RepositoryRequestProcessor.getCommitInfo(userName, repoName, token);
+  		String entity=  RepositoryRequestProcessor.getWeeklyCommitsDistribution(userName, repoName, token);
   		return wrapResponse(entity);
   }
 
