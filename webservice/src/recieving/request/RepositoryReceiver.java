@@ -16,16 +16,20 @@ import processing.response.model.Contributor;
 
 import com.google.gson.Gson;
 
+/**
+ * Handles all repository connected REST request
+ *
+ */
 @Path("/repos")
 public class RepositoryReceiver {
 	
-	public Response wrapResponse(String entity){
+	public Response wrapResponse(String entity){ //to get JSON from outer server, this header must be added
 		return Response.ok(entity).header("Access-Control-Allow-Origin", "*").build();
 	}
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("{username}/{reponame}/contributors")
+  @Path("{username}/{reponame}/contributors") // repository contributors
   public Response getJsonContributors(@PathParam("username") String userName,
 		  @PathParam("reponame") String repoName,  @FormParam("token") String token) {
 	  	JavaLogger.log("RepositoryReceiver| getJsonContributors| User| " + userName + "Repo| " + repoName);
@@ -35,7 +39,7 @@ public class RepositoryReceiver {
   
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("{username}/{reponame}")
+  @Path("{username}/{reponame}") // repository info
   public Response getJsonRepository(@PathParam("username") String userName, 
 		  @PathParam("reponame") String repoName,  @FormParam("token") String token) {
 	  JavaLogger.log("RepositoryReceiver| getJsonRepository| User| " + userName + "Repo| " + repoName);

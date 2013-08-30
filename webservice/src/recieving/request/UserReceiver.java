@@ -15,16 +15,20 @@ import processing.request.UserRequestProcessor;
 import database.DAO;
 import database.DatabaseHelper;
 
+/**
+ * Handles all user connected REST request
+ *
+ */
 @Path("/user")
 public class UserReceiver {
 	
-	public Response wrapResponse(String entity){
+	public Response wrapResponse(String entity){ //to get JSON from outer server, this header must be added
 		return Response.ok(entity).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{username}")
+	@Path("{username}") // user info
 	public Response getJsonUser(@PathParam("username") String userName, @FormParam("token") String token) {
 	    try {
 	    	JavaLogger.log("UserReceiver| Name| " + userName);
@@ -38,7 +42,7 @@ public class UserReceiver {
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{username}/commits")
+	@Path("{username}/commits") //user commits to given repository
 	public Response getJsonUserCommits(@PathParam("username") String userName, @FormParam("token") String token,
 			@FormParam("repoName") String repoName, @FormParam("owner") String owner) {
 	    try {
@@ -53,7 +57,7 @@ public class UserReceiver {
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("authorization")
+	@Path("authorization") //user authorization
 	public Response authorizeUser(@FormParam("username") String userName, @FormParam("password") String password) {
 		try {
 			JavaLogger.log("UserReceiver| authorizeUser |  Name| " + userName);
@@ -66,20 +70,4 @@ public class UserReceiver {
 		}
 	}
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("db")
-	public Response databaseTest() {  // TESTING PURPOSE ONLY
-		DatabaseHelper.startDatabase();
-//		DatabaseHelper.insertStuff();
-//		DatabaseHelper.getStuff();
-		String username="michalbrz";
-		String password = "pwd";
-		String token = "token123123";
-		DAO.insertUser(username, password, token);
-		System.out.println(DAO.getUserCookie(username));
-		System.out.println(DAO.getUserToken(username, password));
-		return wrapResponse("DF");
-	}
-
 } 

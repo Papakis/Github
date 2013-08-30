@@ -14,6 +14,10 @@ import processing.response.model.User;
 import api.communication.RequestSender;
 import aspects.StatusCodeHandler;
 
+/**
+ * Proccesses contributors request. Creates request and when gets it from RequestSender, creates proper JSON response
+ *
+ */
 public class ContributorsRequestProcessor {
 	
 	public static String getContributors(String userName, String repoName, String token){

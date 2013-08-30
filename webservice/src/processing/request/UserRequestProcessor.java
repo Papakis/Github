@@ -20,6 +20,10 @@ import recieving.request.RepositoryReceiver;
 import api.communication.RequestSender;
 import aspects.StatusCodeHandler;
 
+/**
+ * Proccesses every request connected with user. Creates request and when gets it from RequestSender, creates proper JSON response
+ *
+ */
 public class UserRequestProcessor {
 
 	public static String getUser(String userName, String token){
@@ -76,20 +80,6 @@ public class UserRequestProcessor {
 		commits.setCommitMessages(tempCommits);
 		
 		return gson.toJson(commits);
-		
-		
-//		String json=RepositoryRequestProcessor.getRepositoryInfo(userName, repoName, token);
-//		Repository repo=new Gson().fromJson(json, Repository.class);
-//		
-//		ContributorsRequestProcessor.getContributors(userName, repoName, token);
-//		List<Contributor> contributrs=new Gson().fromJson(json, new TypeToken<List<Contributor>>(){}.getType());
-//		
-//		
-//		for (Contributor contributor : contributrs) {
-//			
-//		}
-		
-		
 	}
 
 }

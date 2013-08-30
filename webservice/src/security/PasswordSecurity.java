@@ -2,6 +2,10 @@ package security;
 
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
+/**
+ * handles password security - encrypts and compares if password matches
+ * Encrypted password = hashed and salted password
+ */
 public class PasswordSecurity {
 	
 

@@ -9,6 +9,10 @@ import processing.response.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Changes contributors from GitHub response to contributors from application model.
+ *
+ */
 public class ContributorsDeserializer {
 	
 	private List<Contributor> contributors=new ArrayList<Contributor>();
@@ -35,29 +39,4 @@ public class ContributorsDeserializer {
 		this.contributors = contributors;
 	}
 	
-//	class ContributorsDeserializer implements JsonDeserializer<Author>{
-//
-//		@Override
-//		public Author deserialize(JsonElement json, Type arg1, JsonDeserializationContext arg2)
-//				throws JsonParseException {
-//			Gson gson=new Gson();
-//			
-//			JsonObject jo=(JsonObject)json;
-//			
-//			Author author=new Author();
-//			JsonElement je=jo.get("author");
-//			author=gson.fromJson(je.toString(), Author.class);
-//			
-//			
-//			JsonElement je2=jo.get("weeks");
-//			author.setWeeks(gson.fromJson(je2, Week[].class));
-//			
-//			System.out.println(author.toString());
-//			
-//			return null;
-//			
-//		}
-//		
-//	}
-//	
 }

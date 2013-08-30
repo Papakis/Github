@@ -7,6 +7,10 @@ import processing.response.model.Contributor;
 import processing.response.model.User;
 import processing.response.model.Week;
 
+/**
+ * Model for deserializing contributors data from GitHub
+ *
+ */
 public class ContributorsDeserializerHelper {
 	
 	private int total;
@@ -14,7 +18,6 @@ public class ContributorsDeserializerHelper {
 	UserDeserializerHelper author;
 	
 	public Contributor toContributor(){
-//		Contributor genuineContributor=author.toGenuineContributor();
 		Contributor genuineContributor=new Contributor();
 		genuineContributor.setUser(author.toGenuineUser());
 		genuineContributor.setTotal(total);

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Commits {
 	
-	private List<String[]> commitMessages=new ArrayList<String[]>();
+	private List<String[]> commitMessages=new ArrayList<String[]>(); //String[date,time,messageLength,message]
 	private float averageCommitMessageLength;
 	
 	

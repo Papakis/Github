@@ -10,6 +10,10 @@ import javax.sql.DataSource;
 import org.h2.jdbcx.JdbcConnectionPool;
 import org.h2.tools.Server;
 
+/**
+ * Registers database and handles all queries
+ *
+ */
 public class DatabaseHelper {
 
 	private static String URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
@@ -27,7 +31,6 @@ public class DatabaseHelper {
 							+ " username VARCHAR(100),"
 							+ " password VARCHAR(100)," 
 							+ " token VARCHAR(100),"
-							 +" cookie VARCHAR(100),"
 							+ " )");
 			Server server = Server.createTcpServer().start(); // so we can display database in h2 console
 			System.out.println("URL: jdbc:h2:" + server.getURL() + "/mem:test");
@@ -69,31 +72,6 @@ public class DatabaseHelper {
 		    } finally {
 		        if(statement != null) statement.close();
 		    }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void insertStuff() {
-		try {
-			Connection conn = ds.getConnection();
-			conn.createStatement().execute(
-					"INSERT INTO users (key,username) VALUES (8,'pupka')");
-			conn.createStatement().execute(
-					"INSERT INTO users (key,username) VALUES (14,'dupka')");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void getStuff() {
-		try {
-			Connection conn = ds.getConnection();
-			ResultSet rs = conn.createStatement().executeQuery(
-					("SELECT username FROM users"));
-			while (rs.next()) {
-				System.out.println("value: " + rs.getString("username"));
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

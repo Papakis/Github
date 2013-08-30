@@ -21,17 +21,6 @@ public class Repository {
 				+"\nprivate: "+isPrivate+"\nhtml url: "+htmlUrl+"\ndescription: "+description
 				+"\nurl: "+url+"\ncreated at: "+createdAt+"\npushed at: "+pushedAt
 				+"\nsize: "+size+"\nlanguage: "+language;
-		/*return "id: " + id + "\n" +
-			   "full name: " + fullName + "\n" +
-		       "OWNER: " + owner + "\n" +
-		       "private: " + isPrivate + "\n" +
-		       "html url: " + htmlUrl + "\n" +
-		       "description: " + description + "\n" +
-		       "url: " + url + "\n" +
-		       "created at: " + createdAt + "\n" +
-		       "pushed at: "+pushedAt + "\n" +
-		       "size: " + size + "\n" +
-		       "language: " + language;*/
 	}
 	
 	public int getId() {

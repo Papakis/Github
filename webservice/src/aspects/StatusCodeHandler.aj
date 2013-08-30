@@ -11,12 +11,18 @@ import org.aspectj.lang.annotation.Aspect;
 
 import com.sun.jersey.api.client.ClientResponse;
 
+/**
+ * Deals with status codes returned from GitHub and wraps it with proper description
+ */
 @Aspect
 public class StatusCodeHandler {
+	
 	private static int statusCode;
 	
 	@Around("call (* api.communication.*.authorize(..))")
 	public ClientResponse handleAuthorizationStatusCodes(ProceedingJoinPoint joinPoint) throws Throwable{
+		
+		//authorization codes may mean something different than usual codes, thus separate function to handle this was created
 		JavaLogger.log("StatusCodeHandler| logAround| Before_Proceeding");
 		ClientResponse serverResponse=(ClientResponse) joinPoint.proceed();
 		JavaLogger.log("StatusCodeHandler| logAround| After_Proceeding| Status|" + serverResponse.getStatus());
@@ -69,12 +75,10 @@ public class StatusCodeHandler {
 			return null;
 		case 401:
 			JavaLogger.log("StatusCodeHandler| switch| 401");
-			//throw new RuntimeException("403");
 			statusCode = 401;
 			return null;
 		}
 		
-			
 		System.out.println(serverResponse.getStatus());
 		return serverResponse;
 	}
@@ -86,7 +90,6 @@ public class StatusCodeHandler {
 		gson += "\"message\": " + "\"" + statusErrorMessages(statusCode) + "\"";
 		gson += "}";
 	    
-//		System.out.println("jsonErrorGenerator| Gson Object| \n" + gson + "\n");
 		return gson;
 	}
 	
@@ -100,9 +103,7 @@ public class StatusCodeHandler {
 		case 429: return "Too many unauthenticated requests";
 		case 401: return "Authentication failed";
 		default: return "Error Unkown";
-	
 		}
-	
 	}
 	
 	public int getResponse(){

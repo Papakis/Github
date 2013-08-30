@@ -2,6 +2,10 @@ package processing.response.deserialize;
 
 import processing.response.model.User;
 
+/**
+ * Model for deserializing user data from GitHub
+ *
+ */
 public class UserDeserializerHelper {
 	
 	private String login;

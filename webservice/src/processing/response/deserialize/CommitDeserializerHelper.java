@@ -2,6 +2,11 @@ package processing.response.deserialize;
 
 import java.util.Date;
 
+/**
+ * Model for deserializing commits data from GitHub
+ *
+ */
+
 public class CommitDeserializerHelper {
 	
 	private Commit commit;
@@ -19,7 +24,6 @@ public class CommitDeserializerHelper {
 			
 			public void setDate(String date) {
 				date=date.substring(0, date.length()-1).replace("T", " ");
-//				String[] splittedDate=date.split("T");
 				this.date = date;
 			}
 		}

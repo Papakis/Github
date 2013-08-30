@@ -11,10 +11,15 @@ import com.sun.jersey.api.client.ClientResponse;
 
 import database.DAO;
 
+/**
+ * Proccesses authorization request. Creates request and when gets it from RequestSender, creates proper JSON response
+ * Also adds token to every request, if token is not null.
+ */
 public class AuthorizationProcessor {
 	
-	public static final String CLIENT_ID="7a829cc3e6e3beb72c00";
-	public static final String CLIENT_SECRET="8cf0259157375910d92d9d971bf5685d06d45bab";
+	private static final String CLIENT_ID="7a829cc3e6e3beb72c00";
+	private static final String CLIENT_SECRET="8cf0259157375910d92d9d971bf5685d06d45bab";
+	private static final String AUTHORIZATION_SCOPE="[\"repo\"]";
 	
 	public static String authorizeUser(String username, String password){
 		
@@ -28,7 +33,7 @@ public class AuthorizationProcessor {
 		String request=URL.API+URL.AUTHORIZATION;
 		JavaLogger.log("AuthorizationProcessor| authorizeUser| User| " + username + " URL| " + request);
 		
-		String input="{\"scopes\": [\"repo\"],"
+		String input="{\"scopes\": "+AUTHORIZATION_SCOPE+","
 	    		+ "\"client_id\":\""+CLIENT_ID+"\","
 	    		+ "\"client_secret\":\""+CLIENT_SECRET+"\"}";
 		
@@ -49,7 +54,7 @@ public class AuthorizationProcessor {
 		return gson.toJson(TokenSecurity.encrypt(newToken));
 	}
 
-	public static String addAuthorization(String request, String token) {
+	public static String addAuthorization(String request, String token) { //adds token to request, if token is not null.
 		if(token==null){
 			return request;
 		}

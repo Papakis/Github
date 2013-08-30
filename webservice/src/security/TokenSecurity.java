@@ -2,6 +2,10 @@ package security;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
+/**
+ * handles token security - encrypts and decryps it
+ * Used symmetric encryption, as we need to use token directly to communicate with GitHub API
+ */
 public class TokenSecurity {
 	
 	

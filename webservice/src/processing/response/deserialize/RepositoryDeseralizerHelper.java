@@ -5,6 +5,10 @@ import java.util.Date;
 import processing.response.model.Repository;
 import processing.response.model.User;
 
+/**
+ * Model for deserializing repository data from GitHub
+ *
+ */
 public class RepositoryDeseralizerHelper {
 	
 	private int id;

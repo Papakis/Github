@@ -18,6 +18,10 @@ import processing.response.model.User;
 import api.communication.RequestSender;
 import aspects.StatusCodeHandler;
 
+/**
+ * Proccesses every request connected with repository. Creates request and when gets it from RequestSender, creates proper JSON response
+ *
+ */
 public class RepositoryRequestProcessor {
 	
 	public static String getRepositoryInfo(String userName, String repoName, String token){
@@ -81,21 +85,4 @@ public class RepositoryRequestProcessor {
 		return gson.toJson(commitsList);
 	}
 
-//	public static String getCommits(String userName, String repoName, String token){
-//		String request=URL.API+URL.REPOS+userName+"/"+repoName+URL.COMMITS;
-//		JavaLogger.log("RepositoryRequestProcessor| getCommits| User| " + userName + " Repo| " + repoName + " Url| " + request);
-//		
-//		request=AuthorizationProcessor.addAuthorization(request, token);
-//		ClientResponse serverResponse=RequestSender.sendRequest(request);
-//		
-//		if(serverResponse == null){
-//			System.out.println("RepositoryRequestProcessor|getCommits|Error|");
-//			return StatusCodeHandler.jsonErrorGenerator();
-//		}
-//			
-//		Gson gson=new Gson();
-//		List<CommitStats> commitsList=gson.fromJson(serverResponse.getEntity(String.class), new TypeToken<List<CommitStats>>(){}.getType());
-//		
-//		return gson.toJson(commitsList);
-//	}
 }

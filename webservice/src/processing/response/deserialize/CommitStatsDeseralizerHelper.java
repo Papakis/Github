@@ -5,6 +5,10 @@ import java.util.Arrays;
 import processing.response.model.CommitStats;
 import processing.response.model.Repository;
 
+/**
+ * Model for deserializing commit stats data from GitHub
+ *
+ */
 public class CommitStatsDeseralizerHelper {
 	private String[] days = new String[7];
 	private String total;
