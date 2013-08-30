@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>GitHub Evaluator</title>
+<script type='text/javascript' src='js/JQuery/jquery-2.0.3.min.js'></script>
+<script type='text/javascript' src='js/Knockout/knockout-2.3.0.js'></script>
+<script type='text/javascript' src='js/Flot/jquery.flot.min.js'></script>
+<script type='text/javascript' src='js/Flot/jquery.flot.categories.min.js'></script>
+<script type='text/javascript' src='js/Flot/jquery.flot.valuelabels.js'></script>
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/GithubModel.js"></script>
+
+<script type='text/javascript' src='js/CSV/blob.js'></script>
+<script type='text/javascript' src='js/CSV/blobBuilder.js'></script>
+<script type='text/javascript' src='js/CSV/fileSaver.js'></script>
+<script type='text/javascript' src='js/CSV/helper.js'></script>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/sticky-footer.css" rel="stylesheet">
+
+
+<style>
+	.tab-content{
+		margin-top:2%;
+	}
+	dd{
+		margin-bottom:1%;
+	}
+
+    .wider_cell{
+        width: 80px;
+        white-space:nowrap;
+    }
+	
+	button{
+		margin-bottom:1%;	
+	}
+</style>
+
+</head>
+
+
+<body>
+<div id="wrap">
+
+<div class="container">
+    <div class="page-header">
+        <h1>GitHub Evaluator</h1>
+        <div class="row" id="signIn">
+            <div data-bind="if: !signedIn()">
+                <a href="#signIn"><strong data-bind="click: showSignInWindow" class="text-info pull-right">Log in</strong></a>
+            </div>
+            <div data-bind="if: signedIn">
+                <strong class="pull-right">Hi, <span data-bind="text: user"></span>! <a href="#signOut" data-bind="click: signOut">Sign out</a></strong>
+            </div>
+        </div>
+
+        <!-- SignIn Modal -->
+        <div class="modal fade" id="signInModal">
+            <div class="modal-dialog" style="width: 20%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h2 class="modal-title">Sign in</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <input data-bind="value: user" type="text" class="form-control" placeholder="Username" autofocus>
+                                    <input data-bind="value: password" type="password" class="form-control" placeholder="Password">
+                                    <div class="alert alert-danger" id="authenticationError">Authentication failure</div>
+                                    <button data-bind="click: signIn" data-loading-text="Signing in..." id="signInButton" class="btn btn-large btn-primary btn-block">Sign in</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- SignIn Modal -->
+    </div>
+
+
+    <!-- Search Form -->
+    <div class="row well" id="search">
+        <form class="form-inline">
+                <label>Repo name:</label>
+                <input data-bind="value: repoName" type="text" class="form-control" style="width: 30%" placeholder="Repo name">
+                <label>Username:</label>
+                <input data-bind="value: userName" type="text" class="form-control" style="width: 30%" placeholder="Username">
+                <button data-bind="click: getRepoInfo" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <!-- Search Form -->
+
+	<!-- Error Messsage -->
+	<div class="alert alert-danger" id="notFound" style="display: block;">
+        <!--<pre data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></pre>-->
+            <button data-bind="click: dismissAlert" type="button" class="close">x</button>
+            <div data-bind="with: error">
+            <strong data-bind="text: 'Error '+error+': '+message">Error 404: Requested is not found or requires authentication</strong>
+            </div>
+    </div>
+    <!-- Message -->
+
+    <!-- Unknown Error Messsage -->
+    <div class="alert alert-danger" id="unknownError" style="display: block;">
+        <button data-bind="click: dismissUnknownErrorAlert" type="button" class="close">x</button>
+        <strong>Unknown error. Try <a href="#certificate" data-bind="click: acceptCertificate"> accepting certificate</a></strong>
+    </div>
+    <!-- Message -->
+
+	<div id="content">
+    <!-- Tabs -->
+    <ul class="nav nav-pills nav-justified" id="tabs" >
+        <li class="active"><a href="#repository" data-toggle="tab">Repository</a></li>
+        <li><a href="#users" data-toggle="tab">User</a></li>
+    </ul>
+    <!-- Tabs -->
+
+	<!-- Tab Content -->
+    <div class="tab-content">
+
+        <!-- Repo -->
+        <div  class="tab-pane active" id="repository">
+			<!-- Repo Content -->
+
+                <!-- ######################### -->
+                <!-- Fixed '#repoTabs' -->
+                <ul class="nav nav-tabs nav-justified" id="repoTabs">
+                <!-- ######################### -->
+                    <li class="active"><a href="#repoInfo" data-toggle="tab">Info</a></li>
+                    <li><a href="#repoStats" data-toggle="tab">Stats</a></li>
+                </ul>
+                <!-- Repo Tabs -->
+
+                <div class="tab-content" id="repositoryTab">
+                    <!-- Repo Stats -->
+                    <div class="tab-pane" id="repoStats">
+                        <!--<div id="container"></div>-->
+                        <div id="graph" style="width:600px;height:300px;margin-left: auto;margin-right: auto"></div>
+                    </div>
+                    <!-- Repo Stats -->
+
+                    <!-- Repo Info -->
+                    <div class="tab-pane active" id="repoInfo">
+                        <dl class="dl-horizontal">
+                        <span data-bind="with: repository">
+                            <dt>Repo ID:</dt>
+                            <dd data-bind="text: id"></dd>
+                            <dt>Repo Name:</dt>
+                            <dd data-bind="text: name"></dd>
+                            <span data-bind="with: owner">
+                            <dt>Owner Name:</dt>
+                            <dd data-bind="text: login"></dd>
+                            <dt>Owner URL:</dt>
+                            <dd><a data-bind="attr:{href: htmlUrl, title: htmlUrl}"><span data-bind="text: htmlUrl"></span></a></dd>
+                            </span>
+                            <dt>Private:</dt>
+                            <dd data-bind="text: isPrivate"></dd>
+                            <dt>URL:</dt>
+                            <dd><a data-bind="attr:{href: htmlUrl, title: htmlUrl}"><span data-bind="text: htmlUrl"></span></a></dd>
+                            <dt>Created at:</dt>
+                            <dd data-bind="text: createdAt"></dd>
+                            <dt>Size:</dt>
+                            <dd data-bind="text: size"></dd>
+                            <dt>Language:</dt>
+                            <dd data-bind="text: language"></dd>
+                            </span>
+                            <dt>avg. commit</dt>
+                            <dd data-bind="text: avgCommits"></dd>
+                        </dl>
+                    </div>
+                    <!-- Repo Info -->
+                    <h3 style="margin-top: 3%">Download:</h3>
+                    <button data-bind="click: getRepoCSV" class="btn btn-info" >Repo info</button>
+                </div>
+
+            <!-- Repo Content -->
+        </div>
+        <!-- Repo -->
+
+        <!-- Users -->
+        <div class="tab-pane" id="users">
+                    <div id="usersTab">
+                        <div data-bind="foreach: users" class="accordion" id="accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <!--"attr: {href:'#'+login}"-->
+                                    <a data-bind="attr: {href:'#'+login}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">
+                                        <strong data-bind="text: login"></strong>
+                                    </a>
+                                </div>
+                                <div data-bind="attr: {id:login}" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+
+                                        <div class="media" style="width: 80%">
+                                            <a class="pull-left" href="#" style="text-align: center">
+                                                <img class="media-object img-thumbnail" style="max-width: 100px"  data-bind="attr: {src:avatarUrl}">
+                                                <button data-bind="click: function(data, event) { showUserCommitsModal(login) }" class="btn btn-info" style="margin-top: 20%">Commits</button>
+                                            </a>
+
+                                            <div class="media-body">
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>ID:</strong></p>
+                                                        <p class="list-group-item-text" data-bind="text: id"></p>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>Profile URL:</strong></p>
+                                                        <a class="list-group-item-text" data-bind="text: htmlUrl, attr:{href:htmlUrl}"></a>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>Public Repos:</strong></p>
+                                                        <p class="list-group-item-text" data-bind="text: publicRepos"></p>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>Created at:</strong></p>
+                                                        <p class="list-group-item-text" data-bind="text: createdAt.slice(0,10)"></p>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>Followers:</strong></p>
+                                                        <p class="list-group-item-text" data-bind="text: followers"></p>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>Following:</strong></p>
+                                                        <p class="list-group-item-text" data-bind="text: following"></p>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>Total Commits:</strong></p>
+                                                        <p class="list-group-item-text" data-bind="text: commitsNum"></p>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <p class="list-group-item-heading"><strong>Average Commit Message length:</strong></p>
+                                                        <p class="list-group-item-text" data-bind="text: averageCommitMessageLength"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+							</div>
+                            <!-- UserCommits Modal  data-bind="attr: {id:'modal'+login}"-->
+                            <div class="modal fade" data-bind="attr: {id:'modal'+login}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title"><span data-bind="text: login"></span> commits</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-hover table-condensed">
+                                                <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Length</th>
+                                                    <th>Message</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: commitMessages">
+                                                <tr>
+                                                    <td class="wider_cell" data-bind="text: $data[0]"></td>
+                                                    <td data-bind="text: $data[1]"></td>
+                                                    <td data-bind="text: $data[2]"></td>
+                                                    <td data-bind="text: $data[3]"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            <!-- UserCommits Modal -->
+                        </div>
+                        <h3>Download:</h3>
+                        <button data-bind="click: getUsersCSV" class="btn btn-info" >Users info</button>
+                        <button data-bind="click: getCommitsCSV" class="btn btn-info" >Commit messages</button>
+					</div>
+
+				</div>
+
+        <!-- Users -->
+      </div>
+      <!-- Tab Content -->
+        </div>
+      </div>
+      </div>
+
+<div id="footer">
+    <div class="container">
+        <p class="text-muted credit">Awesome GitHub Evaluator by Michal, Abdul and Nick</p>
+    </div>
+</div>
+</body>
+
+</html>
